@@ -26,3 +26,19 @@ class DeveloperActivity < ActiveRecord::Base
     end
   end
 end
+
+#------------------------------------------------------------------------------
+# DeveloperActivity
+#
+# Name              SQL Type             Null    Default Primary
+# ----------------- -------------------- ------- ------- -------
+# id                integer              false           true   
+# commits           hstore               false           false  
+# developer_id      integer              false           false  
+# event_occurred_at timestamp with time zone false           false  
+# event_id          bigint               false           false  
+# event_type        text                 false           false  
+# repo_name         text                 false           false  
+# created_at        timestamp with time zone false           false  
+#
+#------------------------------------------------------------------------------
