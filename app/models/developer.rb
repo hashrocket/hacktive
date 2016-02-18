@@ -15,6 +15,12 @@ class Developer < ActiveRecord::Base
       name: payload['login']
     )
   end
+
+  def self.create_with_json_array(members)
+    members.each do |member|
+      self.create_with_json(member)
+    end
+  end
 end
 
 #------------------------------------------------------------------------------
