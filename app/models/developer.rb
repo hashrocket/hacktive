@@ -8,6 +8,13 @@
 
 class Developer < ActiveRecord::Base
   has_many :developer_activities
+
+  def self.create_with_json(payload)
+    self.create!(
+      id: payload['id'],
+      name: payload['login']
+    )
+  end
 end
 
 #------------------------------------------------------------------------------

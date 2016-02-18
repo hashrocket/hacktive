@@ -15,8 +15,13 @@
 class DeveloperActivity < ActiveRecord::Base
   def self.create_with_json(activities)
     activities.each do |activity|
+      commits = activity['payload']['commits'].reduce({}) do |object, commit|
+        object[commit['sha']] = commit['message']
+        object
+      end
+
       self.create!(
-        commits: activity['payload']['commits'].reduce({}) {|object, commit| object[commit['sha']] = commit['message']; object },
+        commits: commits,
         developer_id: activity['actor']['id'],
         event_occurred_at: activity['created_at'],
         event_id: activity['id'],
