@@ -12,3 +12,4 @@
 !/log/.keep
 /tmp
 db/structure.sql
+.env
