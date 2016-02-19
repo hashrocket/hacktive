@@ -13,3 +13,4 @@
 /tmp
 db/structure.sql
 .env
+*.sw*
