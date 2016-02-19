@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature "Hacker list" do
-  scenario "Developer sees commit to project", type: :request do
+  scenario "Developer sees github commit to project", type: :request do
     # https://api.github.com/users/vekh
     github_developer = {
       "login" => "VEkh",
@@ -90,7 +90,7 @@ RSpec.feature "Hacker list" do
     expect(activity['commits'].values).to include 'Migrating to Hashrocket git'
   end
 
-  scenario "Developer commits and sees self at the top of the list", type: :request do
+  scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
     vekh_events = [
       {
@@ -188,7 +188,6 @@ RSpec.feature "Hacker list" do
     get '/developers.json'
     developers = JSON.parse(response.body)
 
-    # Then the developer sees their card at the top of the list
     expect(developers.first['name']).to eq 'VEkh'
   end
 end
