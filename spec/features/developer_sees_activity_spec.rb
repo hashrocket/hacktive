@@ -40,7 +40,7 @@ RSpec.feature "Hacker list" do
           ]
         },
         "public" => true,
-        "created_at" => "2016-02-16T15:33:52Z"
+        "created_at" => Time.now.to_s
       }
     ]
 
@@ -87,7 +87,7 @@ RSpec.feature "Hacker list" do
           ]
         },
         "public" => true,
-        "created_at" => "2016-02-05T21:18:31Z"
+        "created_at" => 1.hour.ago.to_s
       }
     ]
 
@@ -175,7 +175,7 @@ RSpec.feature "Hacker list" do
           ]
         },
         "public" => true,
-        "created_at" => "2016-02-16T15:33:52Z"
+        "created_at" => Time.now.to_s
       }
     ]
 
@@ -289,7 +289,7 @@ RSpec.feature "Hacker list" do
           }
         },
         "public" => true,
-        "created_at" => "2016-02-13T14:52:55Z"
+        "created_at" => Time.now.to_s
       }
     ]
 
@@ -416,7 +416,7 @@ RSpec.feature "Hacker list" do
           }
         },
         "public" => true,
-        "created_at" => "2016-02-01T02:31:37Z",
+        "created_at" => Time.now.to_s,
         "org" => {
           "id" => 5875,
           "login" => "hashrocket",
@@ -475,6 +475,7 @@ RSpec.feature "Hacker list" do
     }
 
     # https://api.github.com/users/vekh/events
+    event_occured_at = Time.now.to_s
     github_developer_events = [
       {
         "id" => "3650080452",
@@ -512,7 +513,7 @@ RSpec.feature "Hacker list" do
           ]
         },
         "public" => true,
-        "created_at" => "2016-02-16T15:33:52Z"
+        "created_at" => event_occured_at
       }
     ]
 
@@ -526,6 +527,92 @@ RSpec.feature "Hacker list" do
     expect(top_developer['name']).to eq 'VEkh'
     expect(
       Time.parse(most_recent_activity['event_occurred_at'])
-    ).to eq Time.parse('2016-02-16T15:33:52Z')
+    ).to eq Time.parse(event_occured_at)
+  end
+
+  scenario 'Developer card not shown if activity occurred before cutoff date', type: :request do
+    # https://api.github.com/users/vekh
+    github_developer = {
+      "login" => "VEkh",
+      "id" => 735821,
+      "avatar_url" => "https://avatars.githubusercontent.com/u/735821?v=3",
+      "gravatar_id" => "",
+      "url" => "https://api.github.com/users/VEkh",
+      "html_url" => "https://github.com/VEkh",
+      "followers_url" => "https://api.github.com/users/VEkh/followers",
+      "following_url" => "https://api.github.com/users/VEkh/following{/other_user}",
+      "gists_url" => "https://api.github.com/users/VEkh/gists{/gist_id}",
+      "starred_url" => "https://api.github.com/users/VEkh/starred{/owner}{/repo}",
+      "subscriptions_url" => "https://api.github.com/users/VEkh/subscriptions",
+      "organizations_url" => "https://api.github.com/users/VEkh/orgs",
+      "repos_url" => "https://api.github.com/users/VEkh/repos",
+      "events_url" => "https://api.github.com/users/VEkh/events{/privacy}",
+      "received_events_url" => "https://api.github.com/users/VEkh/received_events",
+      "type" => "User",
+      "site_admin" => false,
+      "name" => "Vidal Ekechukwu",
+      "company" => nil,
+      "blog" => nil,
+      "location" => nil,
+      "email" => nil,
+      "hireable" => nil,
+      "bio" => nil,
+      "public_repos" => 2,
+      "public_gists" => 0,
+      "followers" => 1,
+      "following" => 2,
+      "created_at" => "2011-04-18T04:48:52Z",
+      "updated_at" => "2016-02-16T17:23:23Z"
+    }
+
+    # https://api.github.com/users/vekh/events
+    github_developer_events = [
+      {
+        "id" => "3633736925",
+        "type" => "PushEvent",
+        "actor" => {
+          "id" => 735821,
+          "login" => "VEkh",
+          "gravatar_id" => "",
+          "url" => "https://api.github.com/users/VEkh",
+          "avatar_url" => "https://avatars.githubusercontent.com/u/735821?"
+        },
+        "repo" => {
+          "id" => 51382870,
+          "name" => "VEkh/sideprojects",
+          "url" => "https://api.github.com/repos/VEkh/sideprojects"
+        },
+        "payload" => {
+          "push_id" => 973487414,
+          "size" => 1,
+          "distinct_size" => 1,
+          "ref" => "refs/heads/master",
+          "head" => "6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62",
+          "before" => "2483e17d160a6495a69ff21e8116dd65c7b2933d",
+          "commits" => [
+            {
+              "sha" => "6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62",
+              "author" => {
+                "email" => "vekechukwu@gmail.com",
+                "name" => "Vidal Ekechukwu"
+              },
+              "message" => "Javascripts are loaded. React flow is set up.",
+              "distinct" => true,
+              "url" => "https://api.github.com/repos/VEkh/sideprojects/commits/6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62"
+            }
+          ]
+        },
+        "public" => true,
+        "created_at" => "2016-02-11T15:38:44Z"
+      }
+    ]
+
+    Developer.create_with_json(github_developer)
+    DeveloperActivity.create_with_json(github_developer_events)
+
+    get '/developers.json'
+    developers = JSON.parse(response.body)
+
+    expect(developers).to be_empty
   end
 end
