@@ -6,5 +6,12 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
-EventType.find_or_create_by(name: 'PushEvent')
-EventType.find_or_create_by(name: 'IssuesEvent')
+event_types = [
+  'PushEvent',
+  'IssuesEvent',
+  'PullRequestEvent'
+]
+
+event_types.each do |event_type|
+  EventType.find_or_create_by(name: event_type)
+end

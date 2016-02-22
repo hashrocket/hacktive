@@ -302,6 +302,140 @@ RSpec.feature "Hacker list" do
 
     expect(top_developer['name']).to eq 'chriserin'
     expect(most_recent_activity['repo_name']).to eq 'chriserin/seq27'
-    expect(most_recent_activity['payload']["128439611"]).to eq "closed"
+    expect(most_recent_activity['payload']['128439611']).to eq 'closed'
+  end
+
+  scenario "Developer sees pull request to github project", type: :request do
+    # https://api.github.com/users/chriserin
+    github_developer = {
+      "login" => "chriserin",
+      "id" => 597909,
+      "avatar_url" => "https://avatars.githubusercontent.com/u/597909?v=3",
+      "gravatar_id" => "",
+      "url" => "https://api.github.com/users/chriserin",
+      "html_url" => "https://github.com/chriserin",
+      "followers_url" => "https://api.github.com/users/chriserin/followers",
+      "following_url" => "https://api.github.com/users/chriserin/following{/other_user}",
+      "gists_url" => "https://api.github.com/users/chriserin/gists{/gist_id}",
+      "starred_url" => "https://api.github.com/users/chriserin/starred{/owner}{/repo}",
+      "subscriptions_url" => "https://api.github.com/users/chriserin/subscriptions",
+      "organizations_url" => "https://api.github.com/users/chriserin/orgs",
+      "repos_url" => "https://api.github.com/users/chriserin/repos",
+      "events_url" => "https://api.github.com/users/chriserin/events{/privacy}",
+      "received_events_url" => "https://api.github.com/users/chriserin/received_events",
+      "type" => "User",
+      "site_admin" => false,
+      "name" => nil,
+      "company" => nil,
+      "blog" => nil,
+      "location" => nil,
+      "email" => nil,
+      "hireable" => nil,
+      "bio" => nil,
+      "public_repos" => 32,
+      "public_gists" => 9,
+      "followers" => 11,
+      "following" => 0,
+      "created_at" => "2011-02-03T02:18:28Z",
+      "updated_at" => "2016-02-21T19:34:36Z"
+    }
+
+    # https://api.github.com/users/chriserin/events
+    github_developer_events = [
+      {
+        "id" => "3590105431",
+        "type" => "PullRequestEvent",
+        "actor" => {
+          "id" => 597909,
+          "login" => "chriserin",
+          "gravatar_id" => "",
+          "url" => "https://api.github.com/users/chriserin",
+          "avatar_url" => "https://avatars.githubusercontent.com/u/597909?"
+        },
+        "repo" => {
+          "id" => 50210172,
+          "name" => "hashrocket/hr_hotels",
+          "url" => "https://api.github.com/repos/hashrocket/hr_hotels"
+        },
+        "payload" => {
+          "action" => "opened",
+          "number" => 1,
+          "pull_request" => {
+            "url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/1",
+            "id" => 57790579,
+            "html_url" => "https://github.com/hashrocket/hr_hotels/pull/1",
+            "diff_url" => "https://github.com/hashrocket/hr_hotels/pull/1.diff",
+            "patch_url" => "https://github.com/hashrocket/hr_hotels/pull/1.patch",
+            "issue_url" => "https://api.github.com/repos/hashrocket/hr_hotels/issues/1",
+            "number" => 1,
+            "state" => "open",
+            "locked" => false,
+            "title" => "Calculate the price of a stay",
+            "user" => {
+              "login" => "chriserin",
+              "id" => 597909,
+              "avatar_url" => "https://avatars.githubusercontent.com/u/597909?v=3",
+              "gravatar_id" => "",
+              "url" => "https://api.github.com/users/chriserin",
+              "html_url" => "https://github.com/chriserin",
+              "followers_url" => "https://api.github.com/users/chriserin/followers",
+              "following_url" => "https://api.github.com/users/chriserin/following{/other_user}",
+              "gists_url" => "https://api.github.com/users/chriserin/gists{/gist_id}",
+              "starred_url" => "https://api.github.com/users/chriserin/starred{/owner}{/repo}",
+              "subscriptions_url" => "https://api.github.com/users/chriserin/subscriptions",
+              "organizations_url" => "https://api.github.com/users/chriserin/orgs",
+              "repos_url" => "https://api.github.com/users/chriserin/repos",
+              "events_url" => "https://api.github.com/users/chriserin/events{/privacy}",
+              "received_events_url" => "https://api.github.com/users/chriserin/received_events",
+              "type" => "User",
+              "site_admin" => false
+            },
+            "body" => "This is one potential solution for the price of a stay problem.",
+            "created_at" => "2016-02-01T02:31:36Z",
+            "updated_at" => "2016-02-01T02:31:37Z",
+            "closed_at" => nil,
+            "merged_at" => nil,
+            "merge_commit_sha" => nil,
+            "assignee" => nil,
+            "milestone" => nil,
+            "commits_url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/1/commits",
+            "review_comments_url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/1/comments",
+            "review_comment_url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/comments{/number}",
+            "comments_url" => "https://api.github.com/repos/hashrocket/hr_hotels/issues/1/comments",
+            "statuses_url" => "https://api.github.com/repos/hashrocket/hr_hotels/statuses/32dc084a16445901910c1958b6cb236a4f3aeec5",
+            "merged" => false,
+            "mergeable" => nil,
+            "mergeable_state" => "unknown",
+            "merged_by" => nil,
+            "comments" => 0,
+            "review_comments" => 0,
+            "commits" => 1,
+            "additions" => 14,
+            "deletions" => 2,
+            "changed_files" => 4
+          }
+        },
+        "public" => true,
+        "created_at" => "2016-02-01T02:31:37Z",
+        "org" => {
+          "id" => 5875,
+          "login" => "hashrocket",
+          "gravatar_id" => "",
+          "url" => "https://api.github.com/orgs/hashrocket",
+          "avatar_url" => "https://avatars.githubusercontent.com/u/5875?"
+        }
+      }
+    ]
+
+    Developer.create_with_json(github_developer)
+    DeveloperActivity.create_with_json(github_developer_events)
+
+    get '/developers.json'
+    top_developer = JSON.parse(response.body).first
+    most_recent_activity = top_developer['activities'].first
+
+    expect(top_developer['name']).to eq 'chriserin'
+    expect(most_recent_activity['repo_name']).to eq 'hashrocket/hr_hotels'
+    expect(most_recent_activity['payload']['57790579']).to eq 'opened'
   end
 end
