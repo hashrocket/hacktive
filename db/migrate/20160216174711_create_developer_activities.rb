@@ -14,7 +14,7 @@ class CreateDeveloperActivities < ActiveRecord::Migration
 
       create table developer_activities (
         id serial primary key,
-        commits hstore not null,
+        payload hstore not null,
         developer_id integer not null references developers(id),
         event_occurred_at timestamptz not null,
         event_id bigint not null,

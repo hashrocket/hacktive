@@ -7,3 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
 EventType.find_or_create_by(name: 'PushEvent')
+EventType.find_or_create_by(name: 'IssuesEvent')
