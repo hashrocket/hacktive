@@ -192,7 +192,7 @@ RSpec.feature "Hacker list" do
   end
 
   scenario "Developer sees issue action on github project", type: :request do
-    # https://api.github.com/users/vekh
+    # https://api.github.com/users/chriserin
     github_developer = {
       "login" => "chriserin",
       "id" => 597909,
@@ -226,7 +226,7 @@ RSpec.feature "Hacker list" do
       "updated_at" => "2016-02-21T19:34:36Z"
     }
 
-    # https://api.github.com/users/vekh/events
+    # https://api.github.com/users/chriserin/events
     github_developer_events = [
       {
         "id" => "3641309227",
