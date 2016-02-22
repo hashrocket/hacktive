@@ -603,7 +603,7 @@ RSpec.feature "Hacker list" do
           ]
         },
         "public" => true,
-        "created_at" => "2016-02-11T15:38:44Z"
+        "created_at" => Time.parse(ENV["ACTIVITY_CUTTOFF_DATE"]) - 1.day
       }
     ]
 

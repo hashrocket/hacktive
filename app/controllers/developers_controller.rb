@@ -21,9 +21,9 @@ class DevelopersController < ApplicationController
 
         from (
           select * from developer_activities
-          where event_occurred_at >= (
-            now() - interval '1 week'
-          )
+          where event_occurred_at between
+          '#{ENV["ACTIVITY_CUTTOFF_DATE"]}'::timestamp and
+          now()
 
           order by event_occurred_at desc
         ) da1
