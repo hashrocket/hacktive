@@ -1,21 +1,27 @@
 class DeveloperActivity < ActiveRecord::Base
   def self.create_with_json(activities)
     activities.each do |activity|
+      type = activity['type']
+
+      if !EventType::TYPE_WHITELIST.include?(type)
+        next
+      end
+
       payload = activity['payload']
 
-      case activity['type']
-        when "PushEvent"
+      case type
+        when 'PushEvent'
           commits = payload['commits']
           set_payload = commits.reduce({}) do |object, commit|
             object[commit['sha']] = commit['message']
             object
           end
 
-        when "IssuesEvent"
+        when 'IssuesEvent'
           issue = payload['issue']
           set_payload = {issue['id'] => payload['action']}
 
-        when "PullRequestEvent"
+        when 'PullRequestEvent'
           pull_request = payload['pull_request']
           set_payload = {pull_request['id'] => payload['action']}
       end
