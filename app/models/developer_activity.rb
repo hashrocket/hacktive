@@ -26,10 +26,11 @@ class DeveloperActivity < ActiveRecord::Base
           set_payload = {pull_request['id'] => payload['action']}
       end
 
-      self.create!(
+      self.where(
+        event_id: activity['id']
+      ).first_or_create(
         developer_id: activity['actor']['id'],
         event_occurred_at: activity['created_at'],
-        event_id: activity['id'],
         event_type: activity['type'],
         payload: set_payload,
         repo_name: activity['repo']['name']

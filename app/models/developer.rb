@@ -10,14 +10,14 @@ class Developer < ActiveRecord::Base
   has_many :developer_activities
 
   def self.create_with_json(payload)
-    self.create!(
+    self.find_or_create_by!(
       id: payload['id'],
       name: payload['login']
     )
   end
 
   def self.create_with_json_array(members)
-    members.each do |member|
+    members.map do |member|
       self.create_with_json(member)
     end
   end

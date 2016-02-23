@@ -6,13 +6,13 @@ gem 'pg'
 gem 'rails', '4.2.5.1'
 
 group :development, :test do
+  gem 'annotate_models'
   gem 'dotenv-rails'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.0'
 end
 
 group :development do
-  gem 'annotate_models'
   gem 'web-console', '~> 2.0'
 end
 

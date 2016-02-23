@@ -15,3 +15,8 @@ event_types = [
 event_types.each do |event_type|
   EventType.find_or_create_by(name: event_type)
 end
+
+
+if GithubFetcher.count == 0
+  GithubFetcher.create!(last_fetched_at: Time.now)
+end
