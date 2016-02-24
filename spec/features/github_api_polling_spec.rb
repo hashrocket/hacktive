@@ -1,20 +1,51 @@
 require 'rails_helper'
 
 RSpec.feature 'Github API polling' do
-  scenario 'Github is polled upon a Hactive organization page visit', type: :request do
-    post(
-      '/developers/fetch.json',
-      {organization: 'hashrocket'}
-    )
+  context 'Github fetch is requested upon a Hactive organization page visit', type: :request do
+    scenario "Fetcher has slept long enough", type: :request do
+      fetcher = GithubFetcher.fetcher
+      sleep_duration = ENV['FETCH_SLEEP_DURATION'].to_i
 
-    developers = JSON.parse(response.body)
+      fetcher.update_attributes(
+        last_fetched_at: Time.now - (2 * sleep_duration).seconds
+      )
 
-    first_developer = developers.first.as_json
-    second_developer = developers.second.as_json
+      post(
+        '/developers/fetch.json',
+        {organization: 'hashrocket'}
+      )
 
-    expect(first_developer['first_activity_timestamp']).to(
-      be > second_developer['first_activity_timestamp']
-    )
+      resp = JSON.parse(response.body)
+      developers = resp['developers']
+
+      first_developer = developers.first.as_json
+      second_developer = developers.second.as_json
+
+      expect(resp['fetched']).to be true
+      expect(first_developer['first_activity_timestamp']).to(
+        be > second_developer['first_activity_timestamp']
+      )
+    end
+
+    scenario "Fetcher has not slept long enough", type: :request do
+      fetcher = GithubFetcher.fetcher
+      sleep_duration = ENV['FETCH_SLEEP_DURATION'].to_i
+
+      fetcher.update_attributes(
+        last_fetched_at: Time.now - (0.5 * sleep_duration).seconds
+      )
+
+      post(
+        '/developers/fetch.json',
+        {organization: 'hashrocket'}
+      )
+
+      resp = JSON.parse(response.body)
+      developers = resp['developers']
+
+      expect(resp['fetched']).to be false
+      expect(developers).to be_nil
+    end
   end
 
   scenario "Github public organization's developers are imported from API" do
