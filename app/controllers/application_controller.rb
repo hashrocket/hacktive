@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
     @title = "Hacktive"
 
     respond_to do |format|
-      format.html
+      format.html do
+         redirect_to(
+          action: 'index',
+          controller: 'developers',
+          format: 'json'
+        )
+      end
     end
   end
 end
