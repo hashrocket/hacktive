@@ -44,7 +44,7 @@ RSpec.feature 'Github API polling' do
       developers = resp['developers']
 
       expect(resp['fetched']).to be false
-      expect(developers).to be_nil
+      expect(developers).to be_empty
     end
   end
 

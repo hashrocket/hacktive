@@ -14,11 +14,11 @@ class DevelopersController < ApplicationController
     if fetcher.last_fetched_at < fetch_sleep.seconds.ago
       fetched = true
       GithubFetcher.fetch(params[:organization])
-      developers = Developer.active_developers(params[:organization])
     else
       fetched = false
-      developers = nil
     end
+
+    developers = Developer.active_developers(params[:organization])
 
     resp = {
       fetched: fetched,

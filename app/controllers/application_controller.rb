@@ -7,13 +7,7 @@ class ApplicationController < ActionController::Base
     @title = "Hacktive"
 
     respond_to do |format|
-      format.html do
-        render(
-          'index',
-          :formats=>[:html],
-          :handlers=>[:slim]
-        )
-      end
+      format.html
     end
   end
 end
