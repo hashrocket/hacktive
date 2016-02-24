@@ -1,23 +1,27 @@
 source 'https://rubygems.org'
 
 gem 'dotenv-rails'
-gem 'jbuilder', '~> 2.0'
+gem 'jbuilder'
+gem 'jquery-rails'
 gem 'octokit'
 gem 'pg'
 gem 'rails', '4.2.5.1'
+gem 'react-rails'
+gem 'sass-rails'
+gem 'slim-rails'
 
 group :development, :test do
   gem 'annotate_models'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails'
 end
 
 group :development do
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
 end
 
 group :doc do
-  gem 'sdoc', '~> 0.4.0'
+  gem 'sdoc'
 end
 
 group :test do
