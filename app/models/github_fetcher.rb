@@ -1,9 +1,12 @@
 class GithubFetcher < ActiveRecord::Base
+  # Silences postgres errors during seed
+  validates_uniqueness_of :id
+
   def self.fetcher
     self.first
   end
 
-  def self.fetch(organization='hashrocket')
+  def self.fetch(organization)
     client = Octokit::Client.new
     members = client.get("/orgs/#{organization}/members")
 
@@ -15,7 +18,9 @@ class GithubFetcher < ActiveRecord::Base
 
     fetcher.update_attributes(last_fetched_at: Time.now)
 
-    "#{client.rate_limit.remaining} github requests remaining"
+    requests_notice = "#{client.rate_limit.remaining} github requests remaining"
+    puts requests_notice
+    requests_notice
   end
 end
 
