@@ -2,6 +2,6 @@ Rails.application.routes.draw do
   root to: 'application#index'
 
   resources :developers, only: [:index] do
-    post 'fetch', on: :collection
+    match 'fetch', on: :collection, via: [:get, :post]
   end
 end

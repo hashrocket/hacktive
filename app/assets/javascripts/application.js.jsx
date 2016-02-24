@@ -16,7 +16,7 @@ $(document).ready(function(){
 				dataType: "json",
 				success: function(response){
 					if(response.fetched){
-						alert("Comin out the Github oven!")
+						alert("Hot out the Github oven!")
 					}
 
 					self.setState({
