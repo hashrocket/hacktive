@@ -1,6 +1,22 @@
 require 'rails_helper'
 
-RSpec.feature "Github API polling" do
+RSpec.feature 'Github API polling' do
+  scenario 'Github is polled upon a Hactive organization page visit', type: :request do
+    post(
+      '/developers/fetch.json',
+      {organization: 'hashrocket'}
+    )
+
+    developers = JSON.parse(response.body)
+
+    first_developer = developers.first.as_json
+    second_developer = developers.second.as_json
+
+    expect(first_developer['first_activity_timestamp']).to(
+      be > second_developer['first_activity_timestamp']
+    )
+  end
+
   scenario "Github public organization's developers are imported from API" do
     client = Octokit::Client.new
     github_developers = client.get('/orgs/hashrocket/members')
