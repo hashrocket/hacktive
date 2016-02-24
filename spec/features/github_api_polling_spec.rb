@@ -10,18 +10,13 @@ RSpec.feature 'Github API polling' do
         last_fetched_at: Time.now - (2 * sleep_duration).seconds
       )
 
-      post(
-        '/developers/fetch.json',
-        {organization: 'hashrocket'}
-      )
+      get '/developers.json?fetch=1'
 
-      resp = JSON.parse(response.body)
-      developers = resp['developers']
+      developers = JSON.parse(response.body)
 
       first_developer = developers.first.as_json
       second_developer = developers.second.as_json
 
-      expect(resp['fetched']).to be true
       expect(first_developer['first_activity_timestamp']).to(
         be > second_developer['first_activity_timestamp']
       )
@@ -35,15 +30,10 @@ RSpec.feature 'Github API polling' do
         last_fetched_at: Time.now - (0.5 * sleep_duration).seconds
       )
 
-      post(
-        '/developers/fetch.json',
-        {organization: 'hashrocket'}
-      )
+      get '/developers.json?fetch=1'
 
-      resp = JSON.parse(response.body)
-      developers = resp['developers']
+      developers = JSON.parse(response.body)
 
-      expect(resp['fetched']).to be false
       expect(developers).to be_empty
     end
   end

@@ -6,7 +6,7 @@ class GithubFetcher < ActiveRecord::Base
     self.first
   end
 
-  def self.fetch(organization)
+  def self.fetch(organization='hashrocket')
     client = Octokit::Client.new
     members = client.get("/orgs/#{organization}/members")
 

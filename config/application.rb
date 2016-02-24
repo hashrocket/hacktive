@@ -17,9 +17,7 @@ Bundler.require(*Rails.groups)
 
 module Hackers
   class Application < Rails::Application
-    config.assets.enabled = true
     config.active_record.raise_in_transactional_callbacks = true
     config.active_record.schema_format = :sql
-    config.assets.precompile += %w( *.js *.css .svg .eot .woff .ttf )
   end
 end
