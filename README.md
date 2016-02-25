@@ -1,4 +1,4 @@
-# [Hacktive](https://hashrocket.com)
+# [Hacktive](http://hashrocket-hacktive-staging.herokuapp.com/)
 
 > A social list of Github activity
 
