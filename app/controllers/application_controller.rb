@@ -16,4 +16,10 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def readme
+    respond_to do |format|
+      format.html { render 'README.md' }
+    end
+  end
 end
