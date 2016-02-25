@@ -96,7 +96,10 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(chriserin)
     DeveloperActivity.create_with_json(chriserin_events)
 
-    get '/developers.json'
+    fetcher = GithubFetcher.fetcher
+    fetcher.update_attributes(last_fetched_at: Time.now)
+
+    get '/developers'
     developers = JSON.parse(response.body)
 
     expect(developers.first['name']).to eq 'VEkh'
@@ -182,7 +185,10 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get '/developers.json'
+    fetcher = GithubFetcher.fetcher
+    fetcher.update_attributes(last_fetched_at: Time.now)
+
+    get '/developers'
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -296,7 +302,10 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get '/developers.json'
+    fetcher = GithubFetcher.fetcher
+    fetcher.update_attributes(last_fetched_at: Time.now)
+
+    get '/developers'
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -430,7 +439,10 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get '/developers.json'
+    fetcher = GithubFetcher.fetcher
+    fetcher.update_attributes(last_fetched_at: Time.now)
+
+    get '/developers'
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -520,7 +532,10 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get '/developers.json'
+    fetcher = GithubFetcher.fetcher
+    fetcher.update_attributes(last_fetched_at: Time.now)
+
+    get '/developers'
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -616,7 +631,10 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get '/developers.json'
+    fetcher = GithubFetcher.fetcher
+    fetcher.update_attributes(last_fetched_at: Time.now)
+
+    get '/developers'
     developers = JSON.parse(response.body)
 
     expect(developers).to be_empty

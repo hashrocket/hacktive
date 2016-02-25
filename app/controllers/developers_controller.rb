@@ -7,21 +7,13 @@
 #
 
 class DevelopersController < ApplicationController
-  def fetch
+  def index
     fetcher = GithubFetcher.fetcher
 
     if fetcher.should_fetch?
       GithubFetcher.fetch
     end
 
-    developers = Developer.active_developers(params[:organization])
-
-    respond_to do |format|
-      format.any { render json: developers }
-    end
-  end
-
-  def index
     developers = Developer.active_developers(params[:organization])
 
     respond_to do |format|

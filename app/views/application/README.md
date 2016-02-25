@@ -24,6 +24,10 @@ $ rake db:seed
 $ rails s
 ```
 
+Then:
+
+* In your browser, visit localhost:3000.
+
 ## Hosting
 Hacktive can be found publicly at the following locations:
 

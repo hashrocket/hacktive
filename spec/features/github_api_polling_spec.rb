@@ -19,7 +19,7 @@ RSpec.feature 'Github API polling' do
         last_fetched_at: Time.now - (2 * sleep_duration).seconds
       )
 
-      get '/developers/fetch.json'
+      get '/developers'
 
       developers = JSON.parse(response.body)
 
@@ -45,10 +45,10 @@ RSpec.feature 'Github API polling' do
       sleep_duration = ENV['FETCH_SLEEP_DURATION'].to_i
 
       fetcher.update_attributes(
-        last_fetched_at: Time.now - (0.5 * sleep_duration).seconds
+        last_fetched_at: Time.now
       )
 
-      get '/developers/fetch.json'
+      get '/developers'
 
       developers = JSON.parse(response.body)
 
