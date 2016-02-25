@@ -29,7 +29,7 @@ end
 #
 # Name            SQL Type             Null    Default Primary
 # --------------- -------------------- ------- ------- -------
-# id              integer              false   1       true   
-# last_fetched_at timestamp with time zone false           false  
+# id              integer              false   1       true
+# last_fetched_at timestamp with time zone false           false
 #
 #------------------------------------------------------------------------------

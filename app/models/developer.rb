@@ -24,8 +24,8 @@ class Developer < ActiveRecord::Base
         from (
           select * from developer_activities
           where event_occurred_at between
-          '#{ENV["ACTIVITY_CUTTOFF_DATE"]}'::timestamp and
-          now()
+          now() - interval '#{ENV['ACTIVITY_CUTOFF_DURATION']} seconds'
+          and now()
 
           order by event_occurred_at desc
         ) da1
