@@ -10,8 +10,7 @@ class ApplicationController < ActionController::Base
       format.html do
          redirect_to(
           action: 'index',
-          controller: 'developers',
-          format: 'json'
+          controller: 'developers'
         )
       end
     end

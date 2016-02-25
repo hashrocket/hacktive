@@ -19,7 +19,7 @@ RSpec.feature 'Github API polling' do
         last_fetched_at: Time.now - (2 * sleep_duration).seconds
       )
 
-      get '/developers.json?fetch=1'
+      get '/developers/fetch.json'
 
       developers = JSON.parse(response.body)
 
@@ -48,7 +48,7 @@ RSpec.feature 'Github API polling' do
         last_fetched_at: Time.now - (0.5 * sleep_duration).seconds
       )
 
-      get '/developers.json?fetch=1'
+      get '/developers/fetch.json'
 
       developers = JSON.parse(response.body)
 
