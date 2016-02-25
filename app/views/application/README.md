@@ -32,4 +32,4 @@ Hacktive can be found publicly at the following locations:
 ## License
 Hacktive is released under the [MIT License](https://opensource.org/licenses/MIT)
 
-<sup><sub>Copyright (c) 2016 Hashrocket</sub></sup>
+Copyright (c) 2016 Hashrocket
