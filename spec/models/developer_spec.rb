@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Developer do
-  context '#active_developers' do
+  context '::active_developers' do
     it "should return ordered array of organization's active developers" do
       developers = [
         {
@@ -25,7 +25,7 @@ RSpec.describe Developer do
     end
   end
 
-  context '#create_with_json_array' do
+  context '::create_with_json_array' do
     it 'should add multiple developers to database' do
       hashrocket_memebers = [
         {

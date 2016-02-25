@@ -22,6 +22,14 @@ class GithubFetcher < ActiveRecord::Base
     puts requests_notice
     requests_notice
   end
+
+  def should_fetch?
+    fetcher = GithubFetcher.fetcher
+    fetch_sleep = ENV['FETCH_SLEEP_DURATION'].to_i
+
+    fetcher.last_fetched_at < fetch_sleep.seconds.ago ||
+    Developer.all.empty?
+  end
 end
 
 #------------------------------------------------------------------------------

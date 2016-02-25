@@ -3,6 +3,15 @@ require 'rails_helper'
 RSpec.feature 'Github API polling' do
   context 'Github fetch is requested upon a Hactive organization page visit', type: :request do
     scenario "Fetcher has slept long enough", type: :request do
+      github_developers = [
+        {
+          "login" => "VEkh",
+          "id" => 735821
+        }
+      ]
+
+      Developer.create_with_json_array(github_developers)
+
       fetcher = GithubFetcher.fetcher
       sleep_duration = ENV['FETCH_SLEEP_DURATION'].to_i
 
@@ -23,6 +32,15 @@ RSpec.feature 'Github API polling' do
     end
 
     scenario "Fetcher has not slept long enough", type: :request do
+      github_developers = [
+        {
+          "login" => "VEkh",
+          "id" => 735821
+        }
+      ]
+
+      Developer.create_with_json_array(github_developers)
+
       fetcher = GithubFetcher.fetcher
       sleep_duration = ENV['FETCH_SLEEP_DURATION'].to_i
 

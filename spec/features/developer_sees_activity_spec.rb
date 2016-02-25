@@ -566,6 +566,12 @@ RSpec.feature "Hacker list" do
     }
 
     # https://api.github.com/users/vekh/events
+    pre_cutoff_date = (
+      Time.now -
+      ENV['ACTIVITY_CUTOFF_DURATION'].to_i.seconds -
+      1.hour
+    )
+
     github_developer_events = [
       {
         "id" => "3633736925",
@@ -603,7 +609,7 @@ RSpec.feature "Hacker list" do
           ]
         },
         "public" => true,
-        "created_at" => Time.parse(ENV["ACTIVITY_CUTTOFF_DATE"]) - 1.day
+        "created_at" => pre_cutoff_date
       }
     ]
 

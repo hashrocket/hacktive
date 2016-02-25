@@ -9,12 +9,8 @@
 class DevelopersController < ApplicationController
   def index
     fetcher = GithubFetcher.fetcher
-    fetch_sleep = ENV['FETCH_SLEEP_DURATION'].to_i
 
-    if(
-      !!params[:fetch] &&
-      fetcher.last_fetched_at < fetch_sleep.seconds.ago
-    )
+    if !!params[:fetch] && fetcher.should_fetch?
       GithubFetcher.fetch
     end
 
