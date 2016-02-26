@@ -18,6 +18,7 @@ Follow these instructions to get the app running on your local environment
 ```sh
 $ git clone https://github.com/hashrocket/hacktive.git
 $ cd hacktive
+$ gem install bundler
 $ bundle install
 $ rake db:setup
 $ rake db:seed

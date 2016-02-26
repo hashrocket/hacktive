@@ -56,7 +56,7 @@ end
 #
 # Name SQL Type             Null    Default Primary
 # ---- -------------------- ------- ------- -------
-# id   integer              false           true
-# name text                 false           false
+# id   integer              false           true   
+# name text                 false           false  
 #
 #------------------------------------------------------------------------------

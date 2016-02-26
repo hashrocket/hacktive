@@ -15,7 +15,7 @@ require "action_view/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Hackers
+module Hacktive
   class Application < Rails::Application
     config.active_record.raise_in_transactional_callbacks = true
     config.active_record.schema_format = :sql

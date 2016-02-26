@@ -18,11 +18,16 @@ Follow these instructions to get the app running on your local environment
 ```sh
 $ git clone https://github.com/hashrocket/hacktive.git
 $ cd hacktive
+$ gem install bundler
 $ bundle install
 $ rake db:setup
 $ rake db:seed
 $ rails s
 ```
+
+Then:
+
+* In your browser, visit localhost:3000.
 
 ## Hosting
 Hacktive can be found publicly at the following locations:
