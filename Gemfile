@@ -5,6 +5,7 @@ gem 'jbuilder'
 gem 'octokit'
 gem 'pg'
 gem 'rails', '4.2.5.1'
+gem 'resque'
 
 group :development, :test do
   gem 'annotate_models'
