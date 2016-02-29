@@ -1,1 +1,1 @@
-Resque.redis = 'localhost:6379'
+Resque.redis = ENV['REDIS_URL'] || 'localhost:6379'
