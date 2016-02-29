@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Github API polling' do
-  context 'Github fetch is requested upon a Hactive organization page visit', type: :request do
+  context 'Github fetch is requested upon a Hacktive organization page visit', type: :request do
     scenario "Fetcher has slept long enough", type: :request do
       github_developers = [
         {
@@ -19,16 +19,7 @@ RSpec.feature 'Github API polling' do
         last_fetched_at: Time.now - (2 * sleep_duration).seconds
       )
 
-      get '/developers'
-
-      developers = JSON.parse(response.body)
-
-      first_developer = developers.first.as_json
-      second_developer = developers.second.as_json
-
-      expect(first_developer['first_activity_timestamp']).to(
-        be > second_developer['first_activity_timestamp']
-      )
+      expect(fetcher.should_fetch?).to be true
     end
 
     scenario "Fetcher has not slept long enough", type: :request do
@@ -48,11 +39,7 @@ RSpec.feature 'Github API polling' do
         last_fetched_at: Time.now
       )
 
-      get '/developers'
-
-      developers = JSON.parse(response.body)
-
-      expect(developers).to be_empty
+      expect(fetcher.should_fetch?).to be false
     end
   end
 

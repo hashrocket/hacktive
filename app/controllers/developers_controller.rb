@@ -11,7 +11,7 @@ class DevelopersController < ApplicationController
     fetcher = GithubFetcher.fetcher
 
     if fetcher.should_fetch?
-      GithubFetcher.fetch
+      GithubFetchJob.perform_later
     end
 
     developers = Developer.active_developers(params[:organization])
