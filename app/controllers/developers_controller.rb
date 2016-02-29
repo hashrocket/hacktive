@@ -8,6 +8,8 @@
 
 class DevelopersController < ApplicationController
   def index
+    @title = "Hacktive"
+
     fetcher = GithubFetcher.fetcher
 
     if fetcher.should_fetch?
@@ -17,7 +19,15 @@ class DevelopersController < ApplicationController
     developers = Developer.active_developers(params[:organization])
 
     respond_to do |format|
-      format.any { render json: developers }
+      format.html do
+        render(
+          'index',
+          formats: [:html],
+          handlers: [:slim]
+        )
+      end
+
+      format.json { render json: developers }
     end
   end
 end

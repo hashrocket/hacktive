@@ -26,13 +26,25 @@ $(document).ready(function(){
 			}
 		},
 
-		render: function(){
-			var developers = JSON.stringify(this.state.developers);
+		renderDeveloperCards: function(){
+			var developers = this.state.developers;
 
+			var developerCards = developers.map(function(developer, i){
+				return (
+					<li key={i}>
+						{developer.name+'---'+developer.first_activity_timestamp}
+					</li>
+				)
+			})
+
+			return developerCards
+		},
+
+		render: function(){
 			return (
-				<div>
-					{developers}
-				</div>
+				<ul>
+					{this.renderDeveloperCards()}
+				</ul>
 			)
 		}
 	})
