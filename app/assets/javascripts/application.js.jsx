@@ -1,7 +1,13 @@
 $(document).ready(function(){
 	var HacktiveApp = React.createClass({
 		componentDidMount: function(){
+			var self = this;
+
 			this.fetch()
+
+			setInterval(function(){
+				self.fetch()
+			}, 5000)
 		},
 
 		fetch: function(){
