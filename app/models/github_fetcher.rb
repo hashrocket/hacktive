@@ -8,7 +8,15 @@ class GithubFetcher < ActiveRecord::Base
 
   def self.fetch(organization='hashrocket')
     client = Octokit::Client.new
-    members = client.get("/orgs/#{organization}/members")
+    members = client.get(
+      "/orgs/#{organization}/members",
+      per_page: 100 # max page size
+    )
+
+    while client.last_response.rels[:next] do
+      api_href = client.last_response.rels[:next].href
+      members += client.get(api_href)
+    end
 
     developers = Developer.create_with_json_array(members.as_json)
     developers.each do |developer|
@@ -37,7 +45,7 @@ end
 #
 # Name            SQL Type             Null    Default Primary
 # --------------- -------------------- ------- ------- -------
-# id              integer              false   1       true   
-# last_fetched_at timestamp with time zone false           false  
+# id              integer              false   1       true
+# last_fetched_at timestamp with time zone false           false
 #
 #------------------------------------------------------------------------------

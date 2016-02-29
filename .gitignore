@@ -8,9 +8,10 @@
 /.bundle
 
 # Ignore all logfiles and tempfiles.
+.env.*
+*.sw*
 /log/*
 !/log/.keep
 /tmp
 db/structure.sql
-.env.*
-*.sw*
+dump.rdb
