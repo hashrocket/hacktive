@@ -7,7 +7,7 @@
 #
 
 class Developer < ActiveRecord::Base
-  has_many :developer_activities
+  has_many :developer_activities, dependent: :destroy
 
   def self.active_developers(organization=nil)
     Developer.find_by_sql(%Q[
@@ -45,9 +45,20 @@ class Developer < ActiveRecord::Base
   end
 
   def self.create_with_json_array(members)
-    members.map do |member|
+    member_ids = []
+
+    developers = members.map do |member|
+      member_ids << member['id']
       self.create_with_json(member)
     end
+
+    excess_member_ids = self.where(%Q[
+      id not in (#{member_ids.join(',')})
+    ]).map(&:id)
+
+    self.destroy(excess_member_ids)
+
+    developers
   end
 end
 

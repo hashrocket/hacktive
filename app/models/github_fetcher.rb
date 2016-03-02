@@ -6,10 +6,14 @@ class GithubFetcher < ActiveRecord::Base
     self.first
   end
 
-  def self.fetch(organization='hashrocket')
+  def self.fetch(organization='hashrocket', team_name='Employees')
     client = Octokit::Client.new
+    team = client.get(
+      "/orgs/#{organization}/teams"
+    ).select{|t| t.name =~ /#{team_name}/i}.first
+
     members = client.get(
-      "/orgs/#{organization}/members",
+      "/teams/#{team.id}/members",
       per_page: 100 # max page size
     )
 
@@ -32,11 +36,15 @@ class GithubFetcher < ActiveRecord::Base
   end
 
   def should_fetch?
+    client = Octokit::Client.new
     fetcher = GithubFetcher.fetcher
     fetch_sleep = ENV['FETCH_SLEEP_DURATION'].to_i
 
-    fetcher.last_fetched_at < fetch_sleep.seconds.ago ||
-    Developer.all.empty?
+    client.rate_limit.remaining > 0 &&
+    (
+      fetcher.last_fetched_at < fetch_sleep.seconds.ago ||
+      Developer.all.empty?
+    )
   end
 end
 

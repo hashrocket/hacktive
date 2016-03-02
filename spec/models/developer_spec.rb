@@ -73,5 +73,18 @@ RSpec.describe Developer do
 
       expect(Developer.count).to eq hashrocket_memebers.length
     end
+
+    it "should destroy excess developers" do
+      Developer.create!(
+        id: '12345',
+        name: 'developer'
+      )
+
+      client = Octokit::Client.new
+      github_developers = client.get('/orgs/hashrocket/members')
+      Developer.create_with_json_array(github_developers.as_json)
+
+      expect(Developer.count).to eq github_developers.count
+    end
   end
 end

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe GithubFetcher do
-  context "::fetch" do
+  context '::fetch' do
     it "Fetches and stores Github organizations' members and their events" do
       old_fetcher = GithubFetcher.fetcher
-      GithubFetcher.fetch('hashrocket')
+      GithubFetcher.fetch('hashrocket', 'Employees')
 
       expect(GithubFetcher.fetcher.last_fetched_at).to_not(
         eq old_fetcher.last_fetched_at
@@ -14,8 +14,8 @@ RSpec.describe GithubFetcher do
     end
   end
 
-  context "#should_fetch?" do
-    it "Determines whether Github data should be fetched" do
+  context '#should_fetch?' do
+    it 'Determines whether Github data should be fetched' do
       fetcher = GithubFetcher.fetcher
       expect(fetcher.should_fetch?).to be(true).or be(false)
     end
