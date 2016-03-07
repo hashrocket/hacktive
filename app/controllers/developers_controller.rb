@@ -8,25 +8,18 @@
 
 class DevelopersController < ApplicationController
   def index
-    @title = "Hacktive"
+    @title = 'Hacktive'
 
     fetcher = GithubFetcher.fetcher
 
-    if fetcher.should_fetch?
-      GithubFetchJob.perform_later
+    if !fetcher.polling?
+      GithubFetchJob.perform_later(params[:organization])
     end
 
     developers = Developer.active_developers(params[:organization])
 
     respond_to do |format|
-      format.html do
-        render(
-          'index',
-          formats: [:html],
-          handlers: [:slim]
-        )
-      end
-
+      format.html { render 'index' }
       format.json { render json: developers }
     end
   end

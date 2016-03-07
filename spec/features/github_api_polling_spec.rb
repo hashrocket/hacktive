@@ -1,48 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Github API polling' do
-  context 'Github fetch is requested upon a Hacktive organization page visit', type: :request do
-    scenario "Fetcher has slept long enough", type: :request do
-      github_developers = [
-        {
-          "login" => "VEkh",
-          "id" => 735821
-        }
-      ]
-
-      Developer.create_with_json_array(github_developers)
-
-      fetcher = GithubFetcher.fetcher
-      sleep_duration = ENV['FETCH_SLEEP_DURATION'].to_i
-
-      fetcher.update_attributes(
-        last_fetched_at: Time.now - (2 * sleep_duration).seconds
-      )
-
-      expect(fetcher.should_fetch?).to be true
-    end
-
-    scenario "Fetcher has not slept long enough", type: :request do
-      github_developers = [
-        {
-          "login" => "VEkh",
-          "id" => 735821
-        }
-      ]
-
-      Developer.create_with_json_array(github_developers)
-
-      fetcher = GithubFetcher.fetcher
-      sleep_duration = ENV['FETCH_SLEEP_DURATION'].to_i
-
-      fetcher.update_attributes(
-        last_fetched_at: Time.now
-      )
-
-      expect(fetcher.should_fetch?).to be false
-    end
-  end
-
   scenario "Github public organization's developers are imported from API" do
     client = Octokit::Client.new
     github_developers = client.get('/orgs/hashrocket/members')
