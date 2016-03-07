@@ -1,6 +1,42 @@
 require 'rails_helper'
 
 RSpec.feature 'Github API polling' do
+  context 'I arrive at developers page' do
+    scenario 'Polling has not started', type: :request do
+      fetcher = GithubFetcher.fetcher
+      fetcher.update_attributes(last_fetched_at: nil)
+
+      expect(GithubFetchJob).to receive(:perform_later).once
+      get '/developers'
+    end
+
+    scenario 'Fetcher has slept long enough', type: :request do
+      fetcher = GithubFetcher.fetcher
+      fetcher.update_attributes(requests: 10)
+
+      sleep_duration = fetcher.sleep_duration
+      fetcher.update_attributes(
+        last_fetched_at: (sleep_duration * 2).seconds.ago
+      )
+
+      expect(GithubFetchJob).to receive(:perform_later).once
+      get '/developers'
+    end
+
+    scenario 'Fetcher not slept long enough', type: :request do
+      fetcher = GithubFetcher.fetcher
+      fetcher.update_attributes(requests: 10)
+
+      sleep_duration = fetcher.sleep_duration
+      fetcher.update_attributes(
+        last_fetched_at: Time.now
+      )
+
+      expect(GithubFetchJob).to_not receive(:perform_later)
+      get '/developers'
+    end
+  end
+
   scenario "Github public organization's developers are imported from API" do
     client = Octokit::Client.new
     github_developers = client.get('/orgs/hashrocket/members')

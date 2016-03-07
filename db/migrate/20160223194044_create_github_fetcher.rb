@@ -4,7 +4,7 @@ class CreateGithubFetcher < ActiveRecord::Migration
     execute <<-SQL
       create table github_fetchers(
         id integer primary key default 1,
-        last_fetched_at timestamptz not null,
+        last_fetched_at timestamptz,
         requests integer not null default 0,
         constraint only_one_row check (id=1)
       );

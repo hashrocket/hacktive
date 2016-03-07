@@ -12,11 +12,11 @@ class DevelopersController < ApplicationController
 
     fetcher = GithubFetcher.fetcher
 
-    if !fetcher.polling?
-      GithubFetchJob.perform_later(params[:organization])
+    if fetcher.should_fetch?
+      GithubFetchJob.perform_later
     end
 
-    developers = Developer.active_developers(params[:organization])
+    developers = Developer.active_developers
 
     respond_to do |format|
       format.html { render 'index' }

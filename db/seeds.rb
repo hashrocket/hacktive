@@ -17,4 +17,4 @@ event_types.each do |event_type|
 end
 
 
-GithubFetcher.create(id: 1, last_fetched_at: Time.now)
+GithubFetcher.create(id: 1)

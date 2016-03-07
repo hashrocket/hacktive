@@ -44,7 +44,15 @@ class GithubFetcher < ActiveRecord::Base
     self.first
   end
 
-  def fetcher_sleep_duration
+  def should_fetch?
+    !self.last_fetched_at ||
+    (
+      self.last_fetched_at <
+      self.sleep_duration.seconds.ago
+    )
+  end
+
+  def sleep_duration
     client = Octokit::Client.new
     rate_limit = client.rate_limit.limit
 
@@ -52,11 +60,6 @@ class GithubFetcher < ActiveRecord::Base
     seconds_per_request = 3600.to_f / rate_limit
 
     seconds_per_request * requests_per_fetch # seconds / fetch
-  end
-
-  def polling?
-    self.last_fetched_at <
-    self.fetcher_sleep_duration.seconds.ago
   end
 end
 
@@ -66,7 +69,7 @@ end
 # Name            SQL Type             Null    Default Primary
 # --------------- -------------------- ------- ------- -------
 # id              integer              false   1       true
-# last_fetched_at timestamp with time zone false           false
+# last_fetched_at timestamp with time zone true            false
 # requests        integer              false   0       false
 #
 #------------------------------------------------------------------------------
