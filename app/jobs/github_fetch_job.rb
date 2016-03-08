@@ -1,12 +1,30 @@
 class GithubFetchJob < ActiveJob::Base
   queue_as :github_fetch
 
-  def perform(organization='hashrocket', team='Employees')
-    fetcher = GithubFetcher.fetcher
-    GithubFetcher.fetch(organization, team)
+  def perform(**args)
+    defaults = {
+      fetch: true,
+      organization: 'hashrocket',
+      team: 'Employees'
+    }
 
-    GithubFetchJob.set(
-      wait: fetcher.fetcher_sleep_duration
-    ).perform_later
+    args = defaults.merge(args)
+    fetch = args[:fetch]
+    fetcher = GithubFetcher.fetcher
+
+    if fetcher.should_fetch?
+      if fetch
+        GithubFetcher.fetch(
+          organization: args[:organization],
+          team: args[:team]
+        )
+      end
+
+      fetcher.reload
+
+      GithubFetchJob.set(
+        wait: fetcher.sleep_duration.seconds
+      ).perform_later(args)
+    end
   end
 end

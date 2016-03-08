@@ -2,18 +2,21 @@ class GithubFetcher < ActiveRecord::Base
   # Silences postgres errors during seed
   validates_uniqueness_of :id
 
-  def self.fetch(organization='hashrocket', team_name='Employees')
+  def self.fetch(
+    organization: 'hashrocket',
+    team: 'Employees'
+  )
     client = Octokit::Client.new
     requests_count = 0
 
     if client.rate_limit.remaining > 0
-      team = client.get(
+      team_response = client.get(
         "/orgs/#{organization}/teams"
-      ).select{|t| t.name =~ /#{team_name}/i}.first
+      ).select{|t| t.name =~ /#{team}/i}.first
       requests_count += 1
 
       members = client.get(
-        "/teams/#{team.id}/members",
+        "/teams/#{team_response.id}/members",
         per_page: 100 # max page size
       )
       requests_count += 1
@@ -36,7 +39,8 @@ class GithubFetcher < ActiveRecord::Base
         requests: requests_count
       )
 
-      "#{client.rate_limit.remaining} github requests remaining"
+      puts status = "#{client.rate_limit.remaining} github requests remaining"
+      status
     end
   end
 

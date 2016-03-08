@@ -4,7 +4,10 @@ RSpec.describe GithubFetcher do
   context '::fetch' do
     it "Fetches and stores Github organizations' members and their events" do
       old_fetcher = GithubFetcher.fetcher
-      GithubFetcher.fetch('hashrocket', 'Employees')
+      GithubFetcher.fetch(
+        organization: 'hashrocket',
+        team: 'Employees'
+      )
 
       expect(GithubFetcher.fetcher.last_fetched_at).to_not(
         eq old_fetcher.last_fetched_at

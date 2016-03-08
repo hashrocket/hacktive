@@ -8,6 +8,7 @@ gem 'pg'
 gem 'rails', '4.2.5.1'
 gem 'react-rails'
 gem 'resque'
+gem 'resque-scheduler'
 gem 'sass-rails'
 gem 'slim-rails'
 

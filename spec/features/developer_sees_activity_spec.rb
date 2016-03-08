@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature "Hacker list" do
+  include ActiveJob::TestHelper
+
   scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
     vekh_events = [

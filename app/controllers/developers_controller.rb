@@ -10,11 +10,7 @@ class DevelopersController < ApplicationController
   def index
     @title = 'Hacktive'
 
-    fetcher = GithubFetcher.fetcher
-
-    if fetcher.should_fetch?
-      GithubFetchJob.perform_later
-    end
+    GithubFetchJob.perform_later
 
     developers = Developer.active_developers
 
