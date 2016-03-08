@@ -1,7 +1,7 @@
 class CreateDeveloperActivities < ActiveRecord::Migration
   def up
     execute <<-SQL
-      CREATE EXTENSION IF NOT EXISTS hstore;
+      create extension if not exists hstore;
 
       create table event_types(
         name text not null primary key
