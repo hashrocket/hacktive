@@ -19,7 +19,7 @@ class Developer < ActiveRecord::Base
       join (
         select da1.developer_id,
         to_json(array_agg(da1)) activities_json,
-        min(da1.event_occurred_at) as first_activity_timestamp
+        max(da1.event_occurred_at) as first_activity_timestamp
 
         from (
           select * from developer_activities
