@@ -11,6 +11,10 @@ gem 'resque'
 gem 'resque-scheduler'
 gem 'sass-rails'
 gem 'slim-rails'
+gem 'sprockets-rails'
+gem 'therubyracer'
+gem 'turbolinks'
+gem 'uglifier'
 
 group :development, :test do
   gem 'annotate_models'

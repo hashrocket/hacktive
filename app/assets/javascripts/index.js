@@ -1,7 +1,3 @@
-// Dependencies:
-// * jquery->jquery_ujs+
-// * react->react_ujs+
-
 //= require jquery
 //= require react
 
