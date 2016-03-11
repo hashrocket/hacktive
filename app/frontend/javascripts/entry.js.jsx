@@ -337,11 +337,30 @@ $(document).ready(function(){
   });
 
   HacktiveApp.Body = React.createClass({
+    getInitialState: function(){
+      return {
+        filter: ""
+      }
+    },
+
+    onSearchChange: function(event){
+      var target = event.currentTarget;
+
+      this.setState({
+        filter: target.value
+      })
+    },
+
     render: function(){
       return (
         <div id='body'>
-          <Search/>
-          <DeveloperList/>
+          <Search
+            onSearchChange={this.onSearchChange}
+          />
+
+          <DeveloperList
+            filter={this.state.filter}
+          />
         </div>
       )
     }
@@ -363,16 +382,18 @@ $(document).ready(function(){
             action='/search'
             onSubmit={this.onFormSubmit}
           >
-            <div className='filter-btn'>
+            {/* TODO: Uncomment */}
+            {/*<div className='filter-btn'>
               <ImageWithText
                 _class='btn-gray wrapper'
                 image={{src: ICONS.filter.black}}
               />
-            </div>
+            </div>*/}
 
             <input
               autoComplete='off'
               className='input'
+              onChange={this.props.onSearchChange}
               placeholder='Search'
               type='text'
             />
@@ -384,34 +405,8 @@ $(document).ready(function(){
   //-----End: Render Search-----//
   //
   //-----Start: Render Developer List-----//
-  var _developers = [
-    {
-      activity: 'commited to',
-      avatar: 'https://avatars3.githubusercontent.com/u/735821?v=3&s=460',
-      name: 'Vidal Ekechukwu',
-      project: 'Hackers',
-      stars: 3,
-      username: 'VEkh'
-    },
-    {
-      activity: 'pulled from',
-      avatar: 'https://avatars3.githubusercontent.com/u/694063?v=3&s=400',
-      name: 'Josh Branchaud',
-      project: 'TIL',
-      stars: 3000,
-      username: 'jbranchaud'
-    },
-    {
-      activity: 'forked',
-      avatar: 'https://avatars2.githubusercontent.com/u/597909?v=3&s=400',
-      name: 'Chris Erin',
-      project: 'Seq27',
-      stars: 3 * Math.pow(10, 6),
-      username: 'chriserin'
-    }
-  ];
-
   // Developer List
+  var developers = [];
   var DeveloperList = React.createClass({
     componentDidMount: function(){
       var self = this;
@@ -430,9 +425,8 @@ $(document).ready(function(){
         contentType: 'application/json',
         dataType: 'json',
         success: function(response){
-          self.setState({
-            developers: response
-          })
+          developers = response
+          self.forceUpdate()
         },
         type: 'GET',
         url: '/developers'
@@ -446,10 +440,21 @@ $(document).ready(function(){
     },
 
     renderDeveloperCards: function(){
-      var developers = this.state.developers;
-      var developerCards = developers.map(function(developer, i){
+      var activityLookup = {
+        IssuesEvent: 'issue opened',
+        PullRequestEvent: 'pull',
+        PushEvent: 'commit'
+      };
+      var filterRegex = new RegExp(this.props.filter, "gi");
+
+      var filteredDevelopers = developers.filter(function(developer){
+        return developer.name.match(filterRegex)
+      })
+
+      var developerCards = filteredDevelopers.map(function(developer, i){
+        var mostRecentActivity = developer.activities[0];
         var timestamp = moment(
-          developer.first_activity_timestamp
+          mostRecentActivity.event_occurred_at
         ).format(UiConstants.DATETIME_FORMATS.FORMAT1);
 
         return (
@@ -476,22 +481,21 @@ $(document).ready(function(){
                     </div>
 
                     {/* Project */}
-                    {/*TODO: Finish*/}
-                    {/*<div className='project'>
+                    <div className='project'>
                       <a
-                        href='//github.com'
+                        href={`https://github.com/${mostRecentActivity.repo_name}`}
                         target='_blank'
                       >
                         <span className='text project'>
-                          {developer.username+'/'+developer.project}
+                          {mostRecentActivity.repo_name}
                         </span>
                       </a>
-                      </div>*/}
+                    </div>
 
                     <div className='stats'>
                       {/* Last Commit */}
                       <span className='text commit-datetime'>
-                        {'Last Commit: '+timestamp}
+                        {`Last ${activityLookup[mostRecentActivity.event_type]}: ${timestamp}`}
                       </span>
                     </div>
                   </td>
