@@ -20,5 +20,11 @@ module Hacktive
     config.active_job.queue_adapter = :resque
     config.active_record.raise_in_transactional_callbacks = true
     config.active_record.schema_format = :sql
+
+    config.webpack = {
+      :asset_manifest => {},
+      :common_manifest => {},
+      :use_manifest => false
+    }
   end
 end

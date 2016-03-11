@@ -1,3 +1,7 @@
+var $ = require('jquery')
+var React = require('react');
+var ReactDOM = require('react-dom');
+
 //*****************************************************************//
 //************************Table of Contents************************//
 //*****************************************************************//
@@ -178,7 +182,6 @@ Number.prototype.abbreviate = function(){
 //-----End: Number-----//
 //*****End: Class Extensions*****//
 
-console.log('line 181')
 $(document).ready(function(){
   //*****Start: Variables*****//
   var ICONS = {
@@ -444,9 +447,10 @@ $(document).ready(function(){
 
     renderDeveloperCards: function(){
       var developers = this.state.developers;
-
-      var developerCards = _developers.map(function(developer, i){
-        var timestamp = moment().format(UiConstants.DATETIME_FORMATS.FORMAT2);
+      var developerCards = developers.map(function(developer, i){
+        var timestamp = moment(
+          developer.first_activity_timestamp
+        ).format(UiConstants.DATETIME_FORMATS.FORMAT1);
 
         return (
           <li
@@ -457,19 +461,23 @@ $(document).ready(function(){
               <tbody>
                 <tr>
                   <td className='img-cell'>
-                    <img className='avatar' src={developer.avatar}/>
+                    <img
+                      className='avatar'
+                      src={`https://avatars.githubusercontent.com/u/${developer.id}`}
+                    />
                   </td>
 
                   <td className='text-cell'>
                     {/* User */}
                     <div className='user'>
                       <span className='text name'>{developer.name}</span>
-                      <span className='text username'>{'(@'+developer.username+')'}</span>
-                      <span>{developer.activity}</span>
+                      {/*TODO: Finish*/}
+                      {/*(<span>{developer.activity}</span>*/}
                     </div>
 
                     {/* Project */}
-                    <div className='project'>
+                    {/*TODO: Finish*/}
+                    {/*<div className='project'>
                       <a
                         href='//github.com'
                         target='_blank'
@@ -478,20 +486,13 @@ $(document).ready(function(){
                           {developer.username+'/'+developer.project}
                         </span>
                       </a>
-                    </div>
+                      </div>*/}
 
                     <div className='stats'>
                       {/* Last Commit */}
                       <span className='text commit-datetime'>
                         {'Last Commit: '+timestamp}
                       </span>
-
-                      {/* Stars */}
-                      <ImageWithText
-                        _class='stars inline'
-                        image={{src: ICONS.star.black}}
-                        text={{content: developer.stars.abbreviate()}}
-                      />
                     </div>
                   </td>
                 </tr>
@@ -515,9 +516,8 @@ $(document).ready(function(){
     }
   });
   //-----End: Render Developer List-----//
-  //
   ReactDOM.render(
     <HacktiveApp/>,
     document.getElementById('hacktive')
   )
-});
+})

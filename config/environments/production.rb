@@ -10,4 +10,5 @@ Rails.application.configure do
   config.log_level = :debug
   config.react.variant = :production
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.webpack[:use_manifest] = true
 end
