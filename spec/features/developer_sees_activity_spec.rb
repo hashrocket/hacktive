@@ -3,6 +3,24 @@ require 'rails_helper'
 RSpec.feature "Hacker list" do
   include ActiveJob::TestHelper
 
+  before do
+    event_types = [
+      'IssuesEvent',
+      'PullRequestEvent',
+      'PushEvent',
+      'WatchEvent'
+    ]
+
+    event_types.each do |event_type|
+      EventType.find_or_create_by(name: event_type)
+    end
+
+    @fetcher = GithubFetcher.create!(
+      id: 1,
+      last_fetched_at: Time.now
+    )
+  end
+
   scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
     vekh_events = [
@@ -98,9 +116,6 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(chriserin)
     DeveloperActivity.create_with_json(chriserin_events)
 
-    fetcher = GithubFetcher.fetcher
-    fetcher.update_attributes(last_fetched_at: Time.now)
-
     get '/developers.json'
     developers = JSON.parse(response.body)
 
@@ -110,36 +125,8 @@ RSpec.feature "Hacker list" do
   scenario "Developer sees commit to github project", type: :request do
     # https://api.github.com/users/vekh
     github_developer = {
-      "login" => "VEkh",
       "id" => 735821,
-      "avatar_url" => "https://avatars.githubusercontent.com/u/735821?v=3",
-      "gravatar_id" => "",
-      "url" => "https://api.github.com/users/VEkh",
-      "html_url" => "https://github.com/VEkh",
-      "followers_url" => "https://api.github.com/users/VEkh/followers",
-      "following_url" => "https://api.github.com/users/VEkh/following{/other_user}",
-      "gists_url" => "https://api.github.com/users/VEkh/gists{/gist_id}",
-      "starred_url" => "https://api.github.com/users/VEkh/starred{/owner}{/repo}",
-      "subscriptions_url" => "https://api.github.com/users/VEkh/subscriptions",
-      "organizations_url" => "https://api.github.com/users/VEkh/orgs",
-      "repos_url" => "https://api.github.com/users/VEkh/repos",
-      "events_url" => "https://api.github.com/users/VEkh/events{/privacy}",
-      "received_events_url" => "https://api.github.com/users/VEkh/received_events",
-      "type" => "User",
-      "site_admin" => false,
-      "name" => "Vidal Ekechukwu",
-      "company" => nil,
-      "blog" => nil,
-      "location" => nil,
-      "email" => nil,
-      "hireable" => nil,
-      "bio" => nil,
-      "public_repos" => 2,
-      "public_gists" => 0,
-      "followers" => 1,
-      "following" => 2,
-      "created_at" => "2011-04-18T04:48:52Z",
-      "updated_at" => "2016-02-16T17:23:23Z"
+      "login" => "VEkh"
     }
 
     # https://api.github.com/users/vekh/events
@@ -187,9 +174,6 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    fetcher = GithubFetcher.fetcher
-    fetcher.update_attributes(last_fetched_at: Time.now)
-
     get '/developers.json'
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
@@ -202,36 +186,8 @@ RSpec.feature "Hacker list" do
   scenario "Developer sees issue action on github project", type: :request do
     # https://api.github.com/users/chriserin
     github_developer = {
-      "login" => "chriserin",
       "id" => 597909,
-      "avatar_url" => "https://avatars.githubusercontent.com/u/597909?v=3",
-      "gravatar_id" => "",
-      "url" => "https://api.github.com/users/chriserin",
-      "html_url" => "https://github.com/chriserin",
-      "followers_url" => "https://api.github.com/users/chriserin/followers",
-      "following_url" => "https://api.github.com/users/chriserin/following{/other_user}",
-      "gists_url" => "https://api.github.com/users/chriserin/gists{/gist_id}",
-      "starred_url" => "https://api.github.com/users/chriserin/starred{/owner}{/repo}",
-      "subscriptions_url" => "https://api.github.com/users/chriserin/subscriptions",
-      "organizations_url" => "https://api.github.com/users/chriserin/orgs",
-      "repos_url" => "https://api.github.com/users/chriserin/repos",
-      "events_url" => "https://api.github.com/users/chriserin/events{/privacy}",
-      "received_events_url" => "https://api.github.com/users/chriserin/received_events",
-      "type" => "User",
-      "site_admin" => false,
-      "name" => nil,
-      "company" => nil,
-      "blog" => nil,
-      "location" => nil,
-      "email" => nil,
-      "hireable" => nil,
-      "bio" => nil,
-      "public_repos" => 32,
-      "public_gists" => 9,
-      "followers" => 11,
-      "following" => 0,
-      "created_at" => "2011-02-03T02:18:28Z",
-      "updated_at" => "2016-02-21T19:34:36Z"
+      "login" => "chriserin"
     }
 
     # https://api.github.com/users/chriserin/events
@@ -254,46 +210,7 @@ RSpec.feature "Hacker list" do
         "payload" => {
           "action" => "closed",
           "issue" => {
-            "url" => "https://api.github.com/repos/chriserin/seq27/issues/1",
-            "repository_url" => "https://api.github.com/repos/chriserin/seq27",
-            "labels_url" => "https://api.github.com/repos/chriserin/seq27/issues/1/labels{/name}",
-            "comments_url" => "https://api.github.com/repos/chriserin/seq27/issues/1/comments",
-            "events_url" => "https://api.github.com/repos/chriserin/seq27/issues/1/events",
-            "html_url" => "https://github.com/chriserin/seq27/issues/1",
-            "id" => 128439611,
-            "number" => 1,
-            "title" => "Panic",
-            "user" => {
-              "login" => "chriserin",
-              "id" => 597909,
-              "avatar_url" => "https://avatars.githubusercontent.com/u/597909?v=3",
-              "gravatar_id" => "",
-              "url" => "https://api.github.com/users/chriserin",
-              "html_url" => "https://github.com/chriserin",
-              "followers_url" => "https://api.github.com/users/chriserin/followers",
-              "following_url" => "https://api.github.com/users/chriserin/following{/other_user}",
-              "gists_url" => "https://api.github.com/users/chriserin/gists{/gist_id}",
-              "starred_url" => "https://api.github.com/users/chriserin/starred{/owner}{/repo}",
-              "subscriptions_url" => "https://api.github.com/users/chriserin/subscriptions",
-              "organizations_url" => "https://api.github.com/users/chriserin/orgs",
-              "repos_url" => "https://api.github.com/users/chriserin/repos",
-              "events_url" => "https://api.github.com/users/chriserin/events{/privacy}",
-              "received_events_url" => "https://api.github.com/users/chriserin/received_events",
-              "type" => "User",
-              "site_admin" => false
-            },
-            "labels" => [
-
-            ],
-            "state" => "closed",
-            "locked" => false,
-            "assignee" => nil,
-            "milestone" => nil,
-            "comments" => 0,
-            "created_at" => "2016-01-25T01:05:12Z",
-            "updated_at" => "2016-02-13T14:52:55Z",
-            "closed_at" => "2016-02-13T14:52:55Z",
-            "body" => ""
+            "id" => 128439611
           }
         },
         "public" => true,
@@ -303,9 +220,6 @@ RSpec.feature "Hacker list" do
 
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
-
-    fetcher = GithubFetcher.fetcher
-    fetcher.update_attributes(last_fetched_at: Time.now)
 
     get '/developers.json'
     top_developer = JSON.parse(response.body).first
@@ -319,36 +233,8 @@ RSpec.feature "Hacker list" do
   scenario "Developer sees pull request to github project", type: :request do
     # https://api.github.com/users/chriserin
     github_developer = {
-      "login" => "chriserin",
       "id" => 597909,
-      "avatar_url" => "https://avatars.githubusercontent.com/u/597909?v=3",
-      "gravatar_id" => "",
-      "url" => "https://api.github.com/users/chriserin",
-      "html_url" => "https://github.com/chriserin",
-      "followers_url" => "https://api.github.com/users/chriserin/followers",
-      "following_url" => "https://api.github.com/users/chriserin/following{/other_user}",
-      "gists_url" => "https://api.github.com/users/chriserin/gists{/gist_id}",
-      "starred_url" => "https://api.github.com/users/chriserin/starred{/owner}{/repo}",
-      "subscriptions_url" => "https://api.github.com/users/chriserin/subscriptions",
-      "organizations_url" => "https://api.github.com/users/chriserin/orgs",
-      "repos_url" => "https://api.github.com/users/chriserin/repos",
-      "events_url" => "https://api.github.com/users/chriserin/events{/privacy}",
-      "received_events_url" => "https://api.github.com/users/chriserin/received_events",
-      "type" => "User",
-      "site_admin" => false,
-      "name" => nil,
-      "company" => nil,
-      "blog" => nil,
-      "location" => nil,
-      "email" => nil,
-      "hireable" => nil,
-      "bio" => nil,
-      "public_repos" => 32,
-      "public_gists" => 9,
-      "followers" => 11,
-      "following" => 0,
-      "created_at" => "2011-02-03T02:18:28Z",
-      "updated_at" => "2016-02-21T19:34:36Z"
+      "login" => "chriserin"
     }
 
     # https://api.github.com/users/chriserin/events
@@ -372,58 +258,7 @@ RSpec.feature "Hacker list" do
           "action" => "opened",
           "number" => 1,
           "pull_request" => {
-            "url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/1",
-            "id" => 57790579,
-            "html_url" => "https://github.com/hashrocket/hr_hotels/pull/1",
-            "diff_url" => "https://github.com/hashrocket/hr_hotels/pull/1.diff",
-            "patch_url" => "https://github.com/hashrocket/hr_hotels/pull/1.patch",
-            "issue_url" => "https://api.github.com/repos/hashrocket/hr_hotels/issues/1",
-            "number" => 1,
-            "state" => "open",
-            "locked" => false,
-            "title" => "Calculate the price of a stay",
-            "user" => {
-              "login" => "chriserin",
-              "id" => 597909,
-              "avatar_url" => "https://avatars.githubusercontent.com/u/597909?v=3",
-              "gravatar_id" => "",
-              "url" => "https://api.github.com/users/chriserin",
-              "html_url" => "https://github.com/chriserin",
-              "followers_url" => "https://api.github.com/users/chriserin/followers",
-              "following_url" => "https://api.github.com/users/chriserin/following{/other_user}",
-              "gists_url" => "https://api.github.com/users/chriserin/gists{/gist_id}",
-              "starred_url" => "https://api.github.com/users/chriserin/starred{/owner}{/repo}",
-              "subscriptions_url" => "https://api.github.com/users/chriserin/subscriptions",
-              "organizations_url" => "https://api.github.com/users/chriserin/orgs",
-              "repos_url" => "https://api.github.com/users/chriserin/repos",
-              "events_url" => "https://api.github.com/users/chriserin/events{/privacy}",
-              "received_events_url" => "https://api.github.com/users/chriserin/received_events",
-              "type" => "User",
-              "site_admin" => false
-            },
-            "body" => "This is one potential solution for the price of a stay problem.",
-            "created_at" => "2016-02-01T02:31:36Z",
-            "updated_at" => "2016-02-01T02:31:37Z",
-            "closed_at" => nil,
-            "merged_at" => nil,
-            "merge_commit_sha" => nil,
-            "assignee" => nil,
-            "milestone" => nil,
-            "commits_url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/1/commits",
-            "review_comments_url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/1/comments",
-            "review_comment_url" => "https://api.github.com/repos/hashrocket/hr_hotels/pulls/comments{/number}",
-            "comments_url" => "https://api.github.com/repos/hashrocket/hr_hotels/issues/1/comments",
-            "statuses_url" => "https://api.github.com/repos/hashrocket/hr_hotels/statuses/32dc084a16445901910c1958b6cb236a4f3aeec5",
-            "merged" => false,
-            "mergeable" => nil,
-            "mergeable_state" => "unknown",
-            "merged_by" => nil,
-            "comments" => 0,
-            "review_comments" => 0,
-            "commits" => 1,
-            "additions" => 14,
-            "deletions" => 2,
-            "changed_files" => 4
+            "id" => 57790579
           }
         },
         "public" => true,
@@ -440,9 +275,6 @@ RSpec.feature "Hacker list" do
 
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
-
-    fetcher = GithubFetcher.fetcher
-    fetcher.update_attributes(last_fetched_at: Time.now)
 
     get '/developers.json'
     top_developer = JSON.parse(response.body).first
@@ -488,9 +320,6 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    fetcher = GithubFetcher.fetcher
-    fetcher.update_attributes(last_fetched_at: Time.now)
-
     get '/developers.json'
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
@@ -503,36 +332,8 @@ RSpec.feature "Hacker list" do
   scenario 'Developer sees time description for a recent commit', type: :request do
     # https://api.github.com/users/vekh
     github_developer = {
-      "login" => "VEkh",
       "id" => 735821,
-      "avatar_url" => "https://avatars.githubusercontent.com/u/735821?v=3",
-      "gravatar_id" => "",
-      "url" => "https://api.github.com/users/VEkh",
-      "html_url" => "https://github.com/VEkh",
-      "followers_url" => "https://api.github.com/users/VEkh/followers",
-      "following_url" => "https://api.github.com/users/VEkh/following{/other_user}",
-      "gists_url" => "https://api.github.com/users/VEkh/gists{/gist_id}",
-      "starred_url" => "https://api.github.com/users/VEkh/starred{/owner}{/repo}",
-      "subscriptions_url" => "https://api.github.com/users/VEkh/subscriptions",
-      "organizations_url" => "https://api.github.com/users/VEkh/orgs",
-      "repos_url" => "https://api.github.com/users/VEkh/repos",
-      "events_url" => "https://api.github.com/users/VEkh/events{/privacy}",
-      "received_events_url" => "https://api.github.com/users/VEkh/received_events",
-      "type" => "User",
-      "site_admin" => false,
-      "name" => "Vidal Ekechukwu",
-      "company" => nil,
-      "blog" => nil,
-      "location" => nil,
-      "email" => nil,
-      "hireable" => nil,
-      "bio" => nil,
-      "public_repos" => 2,
-      "public_gists" => 0,
-      "followers" => 1,
-      "following" => 2,
-      "created_at" => "2011-04-18T04:48:52Z",
-      "updated_at" => "2016-02-16T17:23:23Z"
+      "login" => "VEkh"
     }
 
     # https://api.github.com/users/vekh/events
@@ -554,12 +355,6 @@ RSpec.feature "Hacker list" do
           "url" => "https://api.github.com/repos/VEkh/sideprojects"
         },
         "payload" => {
-          "push_id" => 979550639,
-          "size" => 1,
-          "distinct_size" => 1,
-          "ref" => "refs/heads/master",
-          "head" => "30cbf09da0778e4f1eb0bc94575d858d68ea95d6",
-          "before" => "6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62",
           "commits" => [
             {
               "sha" => "30cbf09da0778e4f1eb0bc94575d858d68ea95d6",
@@ -581,9 +376,6 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    fetcher = GithubFetcher.fetcher
-    fetcher.update_attributes(last_fetched_at: Time.now)
-
     get '/developers.json'
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
@@ -597,36 +389,8 @@ RSpec.feature "Hacker list" do
   scenario 'Developer card not shown if activity occurred before cutoff date', type: :request do
     # https://api.github.com/users/vekh
     github_developer = {
-      "login" => "VEkh",
       "id" => 735821,
-      "avatar_url" => "https://avatars.githubusercontent.com/u/735821?v=3",
-      "gravatar_id" => "",
-      "url" => "https://api.github.com/users/VEkh",
-      "html_url" => "https://github.com/VEkh",
-      "followers_url" => "https://api.github.com/users/VEkh/followers",
-      "following_url" => "https://api.github.com/users/VEkh/following{/other_user}",
-      "gists_url" => "https://api.github.com/users/VEkh/gists{/gist_id}",
-      "starred_url" => "https://api.github.com/users/VEkh/starred{/owner}{/repo}",
-      "subscriptions_url" => "https://api.github.com/users/VEkh/subscriptions",
-      "organizations_url" => "https://api.github.com/users/VEkh/orgs",
-      "repos_url" => "https://api.github.com/users/VEkh/repos",
-      "events_url" => "https://api.github.com/users/VEkh/events{/privacy}",
-      "received_events_url" => "https://api.github.com/users/VEkh/received_events",
-      "type" => "User",
-      "site_admin" => false,
-      "name" => "Vidal Ekechukwu",
-      "company" => nil,
-      "blog" => nil,
-      "location" => nil,
-      "email" => nil,
-      "hireable" => nil,
-      "bio" => nil,
-      "public_repos" => 2,
-      "public_gists" => 0,
-      "followers" => 1,
-      "following" => 2,
-      "created_at" => "2011-04-18T04:48:52Z",
-      "updated_at" => "2016-02-16T17:23:23Z"
+      "login" => "VEkh"
     }
 
     # https://api.github.com/users/vekh/events
@@ -653,12 +417,6 @@ RSpec.feature "Hacker list" do
           "url" => "https://api.github.com/repos/VEkh/sideprojects"
         },
         "payload" => {
-          "push_id" => 973487414,
-          "size" => 1,
-          "distinct_size" => 1,
-          "ref" => "refs/heads/master",
-          "head" => "6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62",
-          "before" => "2483e17d160a6495a69ff21e8116dd65c7b2933d",
           "commits" => [
             {
               "sha" => "6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62",
@@ -679,9 +437,6 @@ RSpec.feature "Hacker list" do
 
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
-
-    fetcher = GithubFetcher.fetcher
-    fetcher.update_attributes(last_fetched_at: Time.now)
 
     get '/developers.json'
     developers = JSON.parse(response.body)
