@@ -10,6 +10,7 @@
 # Ignore all logfiles and tempfiles.
 .env.*
 *.sw*
+app/assets/javascripts
 /log/*
 !/log/.keep
 /tmp
