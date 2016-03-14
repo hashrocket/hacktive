@@ -441,9 +441,10 @@ $(document).ready(function(){
 
     renderDeveloperCards: function(){
       var activityLookup = {
-        IssuesEvent: 'issue opened',
-        PullRequestEvent: 'pull',
-        PushEvent: 'commit'
+        IssuesEvent: 'Issue opened at',
+        PullRequestEvent: 'Pull request at',
+        PushEvent: 'Committed at',
+        WatchEvent: 'Starred at'
       };
       var filterRegex = new RegExp(this.props.filter, "gi");
 
@@ -495,7 +496,7 @@ $(document).ready(function(){
                     <div className='stats'>
                       {/* Last Commit */}
                       <span className='text commit-datetime'>
-                        {`Last ${activityLookup[mostRecentActivity.event_type]}: ${timestamp}`}
+                        {`${activityLookup[mostRecentActivity.event_type]}: ${timestamp}`}
                       </span>
                     </div>
                   </td>

@@ -7,9 +7,10 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
 event_types = [
-  'PushEvent',
   'IssuesEvent',
-  'PullRequestEvent'
+  'PullRequestEvent',
+  'PushEvent',
+  'WatchEvent'
 ]
 
 event_types.each do |event_type|

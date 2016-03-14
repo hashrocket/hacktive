@@ -453,6 +453,53 @@ RSpec.feature "Hacker list" do
     expect(most_recent_activity['payload']['57790579']).to eq 'opened'
   end
 
+  scenario "Developer sees star event on github project", type: :request do
+    # https://api.github.com/users/chriserin
+    github_developer = {
+      "id" => 735821,
+      "login" => "VEkh"
+    }
+
+    # https://api.github.com/users/chriserin/events
+    github_developer_events = [
+      {
+        "id" => "3633890600",
+        "type" => "WatchEvent",
+        "actor" => {
+          "id" => 735821,
+          "login" => "VEkh",
+          "gravatar_id" => "",
+          "url" => "https://api.github.com/users/VEkh",
+          "avatar_url" => "https://avatars.githubusercontent.com/u/735821?"
+        },
+        "repo" => {
+          "id" => 30444489,
+          "name" => "jbranchaud/til",
+          "url" => "https://api.github.com/repos/jbranchaud/til"
+        },
+        "payload" => {
+          "action" => "started"
+        },
+        "public" => true,
+        "created_at" => Time.now.to_s
+      }
+    ]
+
+    Developer.create_with_json(github_developer)
+    DeveloperActivity.create_with_json(github_developer_events)
+
+    fetcher = GithubFetcher.fetcher
+    fetcher.update_attributes(last_fetched_at: Time.now)
+
+    get '/developers.json'
+    top_developer = JSON.parse(response.body).first
+    most_recent_activity = top_developer['activities'].first
+
+    expect(top_developer['name']).to eq 'VEkh'
+    expect(most_recent_activity['repo_name']).to eq 'jbranchaud/til'
+    expect(most_recent_activity['payload']['action']).to eq 'started'
+  end
+
   scenario 'Developer sees time description for a recent commit', type: :request do
     # https://api.github.com/users/vekh
     github_developer = {

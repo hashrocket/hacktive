@@ -9,7 +9,8 @@ class EventType < ActiveRecord::Base
   TYPE_WHITELIST = [
     'IssuesEvent',
     'PullRequestEvent',
-    'PushEvent'
+    'PushEvent',
+    'WatchEvent'
   ]
 end
 
@@ -18,6 +19,6 @@ end
 #
 # Name SQL Type             Null    Default Primary
 # ---- -------------------- ------- ------- -------
-# name text                 false           true   
+# name text                 false           true
 #
 #------------------------------------------------------------------------------
