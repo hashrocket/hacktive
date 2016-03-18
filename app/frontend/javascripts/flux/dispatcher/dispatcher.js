@@ -6,10 +6,6 @@ var _promises = [];
 
 var Dispatcher = function() {};
 Dispatcher.prototype = assign({}, Dispatcher.prototype, {
-  /**
-   * dispatch
-   * @param  {object} payload The data from the action.
-   */
   dispatch: function(payload) {
     // First create array of promises for callbacks to reference.
     var resolves = [];
@@ -20,6 +16,7 @@ Dispatcher.prototype = assign({}, Dispatcher.prototype, {
         rejects[i] = reject;
       });
     });
+
     // Dispatch to callbacks and resolve/reject promises.
     _callbacks.forEach(function(callback, i) {
       // Callback can return an obj, to resolve, or a promise, to chain.
@@ -33,11 +30,8 @@ Dispatcher.prototype = assign({}, Dispatcher.prototype, {
     _promises = [];
   },
 
-  /**
-   * Register a Store's callback so that it may be invoked by an action.
-   * @param {function} callback The callback to be registered.
-   * @return {number} The index of the callback within the _callbacks array.
-   */
+
+  // Register a Store's callback so that it may be invoked by an action.
   register: function(callback) {
     _callbacks.push(callback);
     return _callbacks.length - 1; // index
