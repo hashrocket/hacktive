@@ -20,7 +20,8 @@ config.output = {
 config.plugins = [
 	new webpack.ProvidePlugin({
 		$: "jquery",
-		jQuery: "jquery"
+		jQuery: "jquery",
+		moment: "moment"
 	})
 ];
 

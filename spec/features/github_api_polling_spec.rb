@@ -5,8 +5,7 @@ RSpec.feature 'Github API polling' do
     event_types = [
       'IssuesEvent',
       'PullRequestEvent',
-      'PushEvent',
-      'WatchEvent'
+      'PushEvent'
     ]
 
     event_types.each do |event_type|

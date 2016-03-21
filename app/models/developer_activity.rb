@@ -24,9 +24,6 @@ class DeveloperActivity < ActiveRecord::Base
             object[commit['sha']] = commit['message']
             object
           end
-
-        when 'WatchEvent'
-          set_payload = payload
       end
 
       self.where(

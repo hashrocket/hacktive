@@ -1,5 +1,6 @@
 var DevelopersActions = require("flux_root/actions/developers_actions");
 var DevelopersStore = require("flux_root/stores/developers_store");
+var moment = require("moment");
 var React = require("react");
 var ReactDOM = require("react-dom");
 var UiConstants = require("flux_root/constants/ui_constants");

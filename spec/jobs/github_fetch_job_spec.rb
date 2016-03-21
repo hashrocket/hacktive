@@ -7,8 +7,7 @@ RSpec.describe GithubFetchJob, type: :job do
     event_types = [
       'IssuesEvent',
       'PullRequestEvent',
-      'PushEvent',
-      'WatchEvent'
+      'PushEvent'
     ]
 
     event_types.each do |event_type|
@@ -58,6 +57,7 @@ RSpec.describe GithubFetchJob, type: :job do
   scenario "Repeat after the fetcher's sleep duration expires" do
     @fetcher.update_attributes(requests: 1)
 
+    sleep @fetcher.sleep_duration
     GithubFetchJob.perform_now(fetch: false)
 
     assert_enqueued_jobs 1
