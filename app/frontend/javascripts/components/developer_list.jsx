@@ -1,9 +1,9 @@
+var DevelopersActions = require("flux_root/actions/developers_actions");
+var DevelopersStore = require("flux_root/stores/developers_store");
 var React = require("react");
 var ReactDOM = require("react-dom");
-var UiConstants = require("js_root/flux/constants/ui");
+var UiConstants = require("flux_root/constants/ui_constants");
 
-// Developer List
-var developers = [];
 var DeveloperList = React.createClass({
   componentDidMount: function(){
     var self = this;
@@ -22,8 +22,7 @@ var DeveloperList = React.createClass({
       contentType: "application/json",
       dataType: "json",
       success: function(response){
-        developers = response
-        self.forceUpdate()
+        DevelopersActions.setDevelopers(response)
       },
       type: "GET",
       url: "/developers"
@@ -43,6 +42,7 @@ var DeveloperList = React.createClass({
       PushEvent: "Committed at",
       WatchEvent: "Starred at"
     };
+    var developers = DevelopersStore.getDevelopers();
     var filterRegex = new RegExp(this.props.filter, "gi");
 
     var filteredDevelopers = developers.filter(function(developer){

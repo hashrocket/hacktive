@@ -3,8 +3,21 @@ var ICONS = require("js_root/global/icons")
 var React = require("react");
 var ReactDOM = require("react-dom");
 var Search = require("js_root/components/search");
+var UiStore = require("flux_root/stores/ui_store");
 
 var HacktiveApp = React.createClass({
+  componentDidMount: function(){
+    UiStore.addChangeListener(this.onUiStoreChange)
+  },
+
+  componentWillUnmount: function(){
+    UiStore.removeChangeListener(this.onUiStoreChange)
+  },
+
+  onUiStoreChange: function(){
+    this.forceUpdate()
+  },
+
   render: function(){
     return (
       <div id="app">

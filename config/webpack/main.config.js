@@ -26,6 +26,7 @@ config.plugins = [
 
 config.resolve = {
 	alias: {
+		flux_root: path.resolve("./app/frontend/javascripts/flux"),
 		js_root: path.resolve("./app/frontend/javascripts")
 	},
 	extensions: ["", ".js", ".jsx"],
