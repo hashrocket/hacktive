@@ -3,23 +3,6 @@ require 'rails_helper'
 RSpec.feature "Hacker list" do
   include ActiveJob::TestHelper
 
-  before do
-    event_types = [
-      'IssuesEvent',
-      'PullRequestEvent',
-      'PushEvent'
-    ]
-
-    event_types.each do |event_type|
-      EventType.find_or_create_by(name: event_type)
-    end
-
-    @fetcher = GithubFetcher.create!(
-      id: 1,
-      last_fetched_at: Time.now
-    )
-  end
-
   scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
     vekh_events = [

@@ -82,7 +82,7 @@ RSpec.describe Developer do
 
       client = Octokit::Client.new
       github_developers = client.get('/orgs/hashrocket/members')
-      Developer.create_with_json_array(github_developers.as_json)
+      Developer.create_with_json_array(github_developers)
 
       expect(Developer.count).to eq github_developers.count
     end
