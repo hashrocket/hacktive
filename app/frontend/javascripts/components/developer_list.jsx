@@ -30,12 +30,6 @@ var DeveloperList = React.createClass({
     })
   },
 
-  getInitialState: function(){
-    return {
-      developers: []
-    }
-  },
-
   renderDeveloperCards: function(){
     var activityLookup = {
       IssuesEvent: "Issue opened at",
