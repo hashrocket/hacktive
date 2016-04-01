@@ -1,124 +1,10 @@
-//*******************************************************//
-//*******************Table of Contents*******************//
-//*******************************************************//
-// * Variables..................................[Variables]
-// * Mixins........................................[Mixins]
-// * General Styling......................[General Styling]
-// * Search........................................[Search]
-// * Developer List........................[Developer List]
-
 // Imports //
 @import url(https://fonts.googleapis.com/css?family=Work+Sans:400,500|Anonymous+Pro:400,700)
+@import "constants"
+@import "mixins"
+@import "search"
+@import "developer_list"
 
-//*****Start: Variables*****//
-// Fonts
-$font0: "Work Sans", sans-serif
-$font1: "Anonymous Pro", sans-serif
-
-$font_medium: 1em
-$font_large: #{$font_medium + 0.2em}
-$font_small: #{$font_medium - 0.2em}
-
-// Colors
-$gray0: #3A3A3A
-$red0: #BD0D0D
-
-$border_width0: 0.2ex
-$ease_time0: 0.5s
-$height0: 6em
-$margin0: 1ex
-$size1: 1ex
-$size2: 1em
-//*****End: Variables*****//
-
-//*****Start: Mixins*****//
-@mixin border_radius($radius: 0.4ex)
-  @include cross_browser_properties("border-radius", $radius)
-
-@mixin box_shadow($value: "0 0 1em 0 black")
-  @include cross_browser_properties("box-shadow", $value)
-
-@mixin calculate($property, $value)
-  @include cross_browser_values($property, $value)
-
-@mixin circled
-  @include border_radius(100%)
-
-@mixin cross_browser_properties($property, $value)
-  #{$property}: #{$value}
-  -moz-#{$property}: #{$value}
-  -ms-#{$property}: #{$value}
-  -o-#{$property}: #{$value}
-  -webkit-#{$property}: #{$value}
-
-@mixin cross_browser_values($property, $value)
-  #{$property}: #{$value}
-  #{$property}: -moz-#{$value}
-  #{$property}: -ms-#{$value}
-  #{$property}: -o-#{$value}
-  #{$property}: -webkit-#{$value}
-
-@mixin full
-  height: 100%
-  width: 100%
-
-@mixin image_with_text
-  td > *
-    display: block
-
-  .image-cell
-    width: $size2
-
-  .image
-    @include square($size2)
-    @include transition
-    background-position: center center
-    background-repeat: no-repeat
-    background-size: 100% 100%
-    display: block
-    margin: auto
-
-  .image-1
-    margin-left: $margin0
-
-  .text
-    font-size: $font_small
-    font-weight: 700
-    margin-left: $margin0
-
-@mixin scroll_y
-  overflow-x: hidden
-  overflow-y: auto
-
-@mixin square($size)
-  height: $size
-  width: $size
-
-@mixin text_inputs($rule:"")
-  input[type="email"]#{$rule},
-  input[type="password"]#{$rule},
-  input[type="search"]#{$rule},
-  input[type="tel"]#{$rule},
-  input[type="text"]#{$rule},
-  textarea#{$rule}
-    @content
-
-@mixin _transform($value)
-  @include cross_browser_properties("transform", $value)
-
-@mixin transition($value: "all #{$ease_time0} ease")
-  @include cross_browser_properties("transition", $value)
-
-// Colors
-@mixin gradient0
-  background: -moz-linear-gradient(top,  rgba(251,251,251,1) 0%, rgba(251,251,251,1) 63%, rgba(251,251,251,0) 100%)
-  background: -webkit-linear-gradient(top,  rgba(251,251,251,1) 0%,rgba(251,251,251,1) 63%,rgba(251,251,251,0) 100%)
-  background: linear-gradient(to bottom,  rgba(251,251,251,1) 0%,rgba(251,251,251,1) 63%,rgba(251,251,251,0) 100%)
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fbfbfb', endColorstr='#00fbfbfb',GradientType=0 )
-
-//*****End: Mixins*****//
-
-//*****Start: General Styling*****//
 ::-webkit-scrollbar
   @include square($size1)
 
@@ -211,10 +97,10 @@ ul
     display: inline-block
     text-decoration: none
 
-  & .header-0
+  .header-0
     margin: auto
 
-  & .logo
+  .logo
     @include square(5em)
     display: block
     margin: auto
@@ -222,7 +108,7 @@ ul
     &.x-reflect
       @include _transform(scaleX(-1))
 
-  & .title
+  .title
     display: block
     font-family: $font1
     font-size: 2.25em
@@ -235,69 +121,3 @@ ul
   @include scroll_y
   padding-top: $height0
   width: 100%
-//*****End: General Styling*****//
-
-//*****Start: Search*****//
-#search
-  $_height0: 2.75em
-
-  position: relative
-  text-align: center
-
-  & .filter-btn
-    @include square($_height0)
-    display: inline-block
-    margin-right: 1em
-    vertical-align: middle
-
-  & .input
-    @include border_radius
-    @include transition
-    display: inline-block
-    font-size: $font_medium
-    height: $_height0
-    margin: 0 auto
-    max-width: 25em
-    padding: 0 1em
-    width: 90%
-//*****End: Search*****//
-
-//*****Start: Developer List*****//
-#developers-list
-  @include full
-  margin: auto
-  max-width: 50em
-
-  & .developer
-    @include border_radius
-    @include transition
-    border: $border_width0 solid #CCC
-    margin: 1em auto
-    padding: 2em 1em
-
-    &:hover
-      @include box_shadow(0 0 1.5ex 0 rgba(0, 0, 0, 0.2))
-      background: #F9F9F9
-      cursor: pointer
-
-    & .avatar
-      @include circled
-      @include square(5em)
-      margin-right: 1em
-
-    & .text
-      margin-right: 1ex
-
-    & .name
-      font-weight: 700
-
-    & .project
-      font-family: $font1
-      font-size: $font_large
-      font-weight: 700
-      margin: 1ex auto
-
-    & .stats
-      & .text
-        font-size: $font_small
-//*****End: Developer List*****//
