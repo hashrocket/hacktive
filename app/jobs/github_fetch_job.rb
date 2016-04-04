@@ -10,14 +10,14 @@ class GithubFetchJob < ActiveJob::Base
 
     args = defaults.merge(args)
     fetch = args[:fetch]
-    fetcher = GithubFetcher.fetcher
+    organization = args[:organization]
+    team = args[:team]
+
+    fetcher = GithubFetcher.find_by_organization(organization)
 
     if fetcher.should_fetch?
       if fetch
-        GithubFetcher.fetch(
-          organization: args[:organization],
-          team: args[:team]
-        )
+        fetcher.fetch(team: :team)
       end
 
       fetcher.reload
