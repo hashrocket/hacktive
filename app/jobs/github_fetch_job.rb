@@ -13,11 +13,13 @@ class GithubFetchJob < ActiveJob::Base
     organization = args[:organization]
     team = args[:team]
 
-    fetcher = GithubFetcher.find_by_organization(organization)
+    fetcher = GithubFetcher.find_or_create_by(
+      organization: organization
+    )
 
     if fetcher.should_fetch?
       if fetch
-        fetcher.fetch(team: :team)
+        fetcher.fetch(team: team)
       end
 
       fetcher.reload
