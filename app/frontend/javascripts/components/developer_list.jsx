@@ -68,7 +68,8 @@ var DeveloperList = React.createClass({
                 <td className="text-cell">
                   {/* User */}
                   <div className="user">
-                    <span className="text name">{developer.login}</span>
+                    <span className="text name">{developer.name}</span>
+                    <span className="text username">{"@"+developer.login}</span>
                     {/*TODO: Finish*/}
                     {/*(<span>{developer.activity}</span>*/}
                   </div>

@@ -20,11 +20,18 @@
       @include square(5em)
       margin-right: 1em
 
-    .text
-      margin-right: 1ex
+    .user
+      .text
+        display: inline-block
+        vertical-align: bottom
 
-    .name
-      font-weight: 700
+        &.name
+          font-size: $font_smaller
+          font-weight: 700
+          margin-right: 1ex
+
+        &.username
+          font-size: $font_xsmall
 
     .project
       font-family: $font1
