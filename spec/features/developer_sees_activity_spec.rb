@@ -3,6 +3,16 @@ require 'rails_helper'
 RSpec.feature "Hacker list" do
   include ActiveJob::TestHelper
 
+  let(:stubbed_developer) do
+    # https://api.github.com/users/vekh
+    {
+      "id" => 735821,
+      "login" => "VEkh",
+      "name" => "Vidal Ekechukwu"
+    }
+  end
+
+
   scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
     vekh_events = [
@@ -101,15 +111,64 @@ RSpec.feature "Hacker list" do
     get '/developers.json'
     developers = JSON.parse(response.body)
 
-    expect(developers.first['name']).to eq 'VEkh'
+    expect(developers.first["login"]).to eq 'VEkh'
+  end
+
+  scenario "Developer card shows pertinent details", type: :request do
+    github_developer = stubbed_developer
+
+    # https://api.github.com/users/vekh/events
+    github_developer_events = [
+      {
+        "id" => "3650080452",
+        "type" => "PushEvent",
+        "actor" => {
+          "id" => 735821,
+          "login" => "VEkh",
+          "gravatar_id" => "",
+          "url" => "https://api.github.com/users/VEkh",
+          "avatar_url" => "https://avatars.githubusercontent.com/u/735821?"
+        },
+        "repo" => {
+          "id" => 51382870,
+          "name" => "VEkh/sideprojects",
+          "url" => "https://api.github.com/repos/VEkh/sideprojects"
+        },
+        "payload" => {
+          "push_id" => 979550639,
+          "commits" => [
+            {
+              "sha" => "30cbf09da0778e4f1eb0bc94575d858d68ea95d6",
+              "author" => {
+                "email" => "vekechukwu@gmail.com",
+                "name" => "Vidal Ekechukwu"
+              },
+              "message" => "Migrating to Hashrocket git",
+              "distinct" => true,
+              "url" => "https://api.github.com/repos/VEkh/sideprojects/commits/30cbf09da0778e4f1eb0bc94575d858d68ea95d6"
+            }
+          ]
+        },
+        "public" => true,
+        "created_at" => Time.now.to_s
+      }
+    ]
+
+    Developer.create_with_json(github_developer)
+    DeveloperActivity.create_with_json(github_developer_events)
+
+    get "/developers.json"
+    top_developer = JSON.parse(response.body).first
+    most_recent_activity = top_developer["activities"].first
+
+    expect(top_developer["name"]).to eq "Vidal Ekechukwu"
+    expect(top_developer["login"]).to eq "VEkh"
+    expect(most_recent_activity["repo_name"]).to eq "VEkh/sideprojects"
+    expect(most_recent_activity["payload"].values).to include "Migrating to Hashrocket git"
   end
 
   scenario "Developer sees commit to github project", type: :request do
-    # https://api.github.com/users/vekh
-    github_developer = {
-      "id" => 735821,
-      "login" => "VEkh"
-    }
+    github_developer = stubbed_developer
 
     # https://api.github.com/users/vekh/events
     github_developer_events = [
@@ -160,7 +219,7 @@ RSpec.feature "Hacker list" do
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
-    expect(top_developer['name']).to eq 'VEkh'
+    expect(top_developer["login"]).to eq 'VEkh'
     expect(most_recent_activity['repo_name']).to eq 'VEkh/sideprojects'
     expect(most_recent_activity['payload'].values).to include 'Migrating to Hashrocket git'
   end
@@ -207,7 +266,7 @@ RSpec.feature "Hacker list" do
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
-    expect(top_developer['name']).to eq 'chriserin'
+    expect(top_developer["login"]).to eq 'chriserin'
     expect(most_recent_activity['repo_name']).to eq 'chriserin/seq27'
     expect(most_recent_activity['payload']['128439611']).to eq 'closed'
   end
@@ -262,7 +321,7 @@ RSpec.feature "Hacker list" do
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
-    expect(top_developer['name']).to eq 'chriserin'
+    expect(top_developer["login"]).to eq 'chriserin'
     expect(most_recent_activity['repo_name']).to eq 'hashrocket/hr_hotels'
     expect(most_recent_activity['payload']['57790579']).to eq 'opened'
   end
@@ -318,7 +377,7 @@ RSpec.feature "Hacker list" do
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
-    expect(top_developer['name']).to eq 'VEkh'
+    expect(top_developer["login"]).to eq 'VEkh'
     expect(
       Time.parse(most_recent_activity['event_occurred_at'])
     ).to eq Time.parse(event_occured_at)

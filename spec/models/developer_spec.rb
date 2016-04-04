@@ -31,40 +31,10 @@ RSpec.describe Developer do
         {
           "login" => "adennis4",
           "id" => 785345,
-          "avatar_url" => "https://avatars.githubusercontent.com/u/785345?v=3",
-          "gravatar_id" => "",
-          "url" => "https://api.github.com/users/adennis4",
-          "html_url" => "https://github.com/adennis4",
-          "followers_url" => "https://api.github.com/users/adennis4/followers",
-          "following_url" => "https://api.github.com/users/adennis4/following{/other_user}",
-          "gists_url" => "https://api.github.com/users/adennis4/gists{/gist_id}",
-          "starred_url" => "https://api.github.com/users/adennis4/starred{/owner}{/repo}",
-          "subscriptions_url" => "https://api.github.com/users/adennis4/subscriptions",
-          "organizations_url" => "https://api.github.com/users/adennis4/orgs",
-          "repos_url" => "https://api.github.com/users/adennis4/repos",
-          "events_url" => "https://api.github.com/users/adennis4/events{/privacy}",
-          "received_events_url" => "https://api.github.com/users/adennis4/received_events",
-          "type" => "User",
-          "site_admin" => false
         },
         {
           "login" => "briandunn",
-          "id" => 93310,
-          "avatar_url" => "https://avatars.githubusercontent.com/u/93310?v=3",
-          "gravatar_id" => "",
-          "url" => "https://api.github.com/users/briandunn",
-          "html_url" => "https://github.com/briandunn",
-          "followers_url" => "https://api.github.com/users/briandunn/followers",
-          "following_url" => "https://api.github.com/users/briandunn/following{/other_user}",
-          "gists_url" => "https://api.github.com/users/briandunn/gists{/gist_id}",
-          "starred_url" => "https://api.github.com/users/briandunn/starred{/owner}{/repo}",
-          "subscriptions_url" => "https://api.github.com/users/briandunn/subscriptions",
-          "organizations_url" => "https://api.github.com/users/briandunn/orgs",
-          "repos_url" => "https://api.github.com/users/briandunn/repos",
-          "events_url" => "https://api.github.com/users/briandunn/events{/privacy}",
-          "received_events_url" => "https://api.github.com/users/briandunn/received_events",
-          "type" => "User",
-          "site_admin" => false
+          "id" => 93310
         }
       ]
 
@@ -75,10 +45,7 @@ RSpec.describe Developer do
     end
 
     it "should destroy excess developers" do
-      Developer.create!(
-        id: '12345',
-        name: 'developer'
-      )
+      create(:developer)
 
       client = Octokit::Client.new
       github_developers = client.get('/orgs/hashrocket/members')

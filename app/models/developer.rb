@@ -38,10 +38,16 @@ class Developer < ActiveRecord::Base
   end
 
   def self.create_with_json(payload)
-    self.find_or_create_by!(
-      id: payload['id'],
-      name: payload['login']
-    )
+    self.find_or_initialize_by(
+      id: payload["id"]
+    ).tap do |developer|
+      developer.attributes = {
+        login: payload["login"],
+        name: payload["name"]
+      }
+
+      developer.save!
+    end
   end
 
   def self.create_with_json_array(members)
@@ -65,9 +71,10 @@ end
 #------------------------------------------------------------------------------
 # Developer
 #
-# Name SQL Type             Null    Default Primary
-# ---- -------------------- ------- ------- -------
-# id   integer              false           true
-# name text                 false           false
+# Name  SQL Type             Null    Default Primary
+# ----- -------------------- ------- ------- -------
+# id    integer              false           true
+# login text                 false           false
+# name  text                 true            false
 #
 #------------------------------------------------------------------------------

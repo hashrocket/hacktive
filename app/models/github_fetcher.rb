@@ -23,7 +23,7 @@ class GithubFetcher < ActiveRecord::Base
 
       developers = Developer.create_with_json_array(members)
       developers.each do |developer|
-        activities = client.get("/users/#{developer.name}/events/public")
+        activities = client.get("/users/#{developer.login}/events/public")
         requests_count += 1
         DeveloperActivity.create_with_json(activities)
       end
