@@ -41,7 +41,7 @@ var DeveloperList = React.createClass({
     var filterRegex = new RegExp(this.props.filter, "gi");
 
     var filteredDevelopers = developers.filter(function(developer){
-      return developer.name.match(filterRegex)
+      return developer.login.match(filterRegex)
     })
 
     var developerCards = filteredDevelopers.map(function(developer, i){
@@ -68,7 +68,7 @@ var DeveloperList = React.createClass({
                 <td className="text-cell">
                   {/* User */}
                   <div className="user">
-                    <span className="text name">{developer.name}</span>
+                    <span className="text name">{developer.login}</span>
                     {/*TODO: Finish*/}
                     {/*(<span>{developer.activity}</span>*/}
                   </div>

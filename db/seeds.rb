@@ -15,6 +15,3 @@ event_types = [
 event_types.each do |event_type|
   EventType.find_or_create_by(name: event_type)
 end
-
-
-GithubFetcher.create(id: 1)
