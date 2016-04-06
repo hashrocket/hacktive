@@ -26,6 +26,7 @@ var Search = React.createClass({
           <input
             autoComplete="off"
             className="input"
+            id="search-input"
             onChange={this.props.onSearchChange}
             placeholder="Search"
             type="text"

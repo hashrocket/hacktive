@@ -1,4 +1,6 @@
 class DeveloperActivity < ActiveRecord::Base
+  belongs_to :developer
+
   def self.create_with_json(activities)
     activities.each do |activity|
       event_type = activity['type']

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :developer do
-    id '12345'
-    login 'developer'
-    name 'Devi McVeloper'
+    id 735821
+    login "VEkh"
+    name "Vidal Ekechukwu"
   end
 end

@@ -3,15 +3,7 @@ require 'rails_helper'
 RSpec.feature "Hacker list" do
   include ActiveJob::TestHelper
 
-  let(:stubbed_developer) do
-    # https://api.github.com/users/vekh
-    {
-      "id" => 735821,
-      "login" => "VEkh",
-      "name" => "Vidal Ekechukwu"
-    }
-  end
-
+  let(:developer) { create(:developer) }
 
   scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
@@ -115,7 +107,7 @@ RSpec.feature "Hacker list" do
   end
 
   scenario "Developer card shows pertinent details", type: :request do
-    github_developer = stubbed_developer
+    github_developer = developer
 
     # https://api.github.com/users/vekh/events
     github_developer_events = [
@@ -168,7 +160,7 @@ RSpec.feature "Hacker list" do
   end
 
   scenario "Developer sees commit to github project", type: :request do
-    github_developer = stubbed_developer
+    github_developer = developer
 
     # https://api.github.com/users/vekh/events
     github_developer_events = [
