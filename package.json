@@ -27,8 +27,8 @@
     "react-dom": "^0.14.7"
   },
   "jest": {
-    "testDirectoryName": "<rootDir>/test/jest/",
-    "testPathPattern": "/**/",
+    "testDirectoryName": "jest",
+    "testPathDirs": ["<rootDir>/test"],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",
