@@ -2,6 +2,9 @@
   "name": "hacktive",
   "description": "A social list of Github activity",
   "version": "1.0.0",
+  "babel": {
+    "presets": ["es2015", "react"]
+  },
   "devDependencies": {
     "babel-core": "^6.6.5",
     "babel-jest": "^10.0.1",
@@ -27,6 +30,12 @@
     "react-dom": "^0.14.7"
   },
   "jest": {
+    "globals": {
+      "flux_root": "<rootDir>/app/frontend/javascripts/flux",
+      "js_root": "<rootDir>/app/frontend/javascripts"
+    },
+    "moduleFileExtensions": ["js", "jsx"],
+    "preprocessCachingDisabled": true,
     "testDirectoryName": "jest",
     "testPathDirs": ["<rootDir>/test"],
     "unmockedModulePathPatterns": [
@@ -36,7 +45,7 @@
     ],
     "verbose": true
   },
- "scripts": {
+  "scripts": {
     "test": "jest"
   }
 }
