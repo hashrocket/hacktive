@@ -61,24 +61,12 @@ HacktiveApp.Body = React.createClass({
     }
   },
 
-  onSearchChange: function(event){
-    var target = event.currentTarget;
-
-    this.setState({
-      filter: target.value
-    })
-  },
-
   render: function(){
     return (
       <div id="body">
-        <Search
-          onSearchChange={this.onSearchChange}
-        />
+        <Search/>
 
-        <DeveloperList
-          filter={this.state.filter}
-        />
+        <DeveloperList/>
       </div>
     )
   }

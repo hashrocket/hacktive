@@ -1,20 +1,20 @@
 var assign = require("object-assign");
-var DevelopersConstants = require("flux_root/constants/developers_constants")
 var EventEmitter = require("events").EventEmitter;
 var HacktiveDispatcher = require("flux_root/dispatchers/hacktive_dispatcher");
+var SearchConstants = require("flux_root/constants/search_constants");
 var UiStore = require("flux_root/stores/ui_store");
 
-var _developers = []
+var _query = "";
 
-var DevelopersStore = assign({}, EventEmitter.prototype, {
+var SearchStore = assign({}, EventEmitter.prototype, {
   dispatcherIndex: HacktiveDispatcher.register(function(payload) {
     var action = payload.action;
     var args = payload.args;
     var callback = payload.callback;
 
     switch(action) {
-      case DevelopersConstants.DEVELOPERS_SET_DEVELOPERS: {
-        DevelopersStore.setDevelopers(args)
+      case SearchConstants.SEARCH_SET_QUERY: {
+        SearchStore.setQuery(args)
 
         UiStore.emitChange()
       }
@@ -23,15 +23,15 @@ var DevelopersStore = assign({}, EventEmitter.prototype, {
     return true; // No errors. Needed by promise in Dispatcher.
   }),
 
-  getDevelopers: function() {
-    return _developers;
+  getQuery: function() {
+    return _query;
   },
 
-  setDevelopers: function(developers) {
-    _developers = developers
+  setQuery: function(query) {
+    _query = query
 
-    return _developers;
+    return _query;
   }
 });
 
-module.exports = DevelopersStore;
+module.exports = SearchStore;

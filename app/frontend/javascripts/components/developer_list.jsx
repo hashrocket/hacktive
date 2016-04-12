@@ -1,8 +1,10 @@
-var DevelopersActions = require("flux_root/actions/developers_actions");
-var DevelopersStore = require("flux_root/stores/developers_store");
 var moment = require("moment");
 var React = require("react");
 var ReactDOM = require("react-dom");
+
+var DevelopersActions = require("flux_root/actions/developers_actions");
+var DevelopersStore = require("flux_root/stores/developers_store");
+var SearchStore = require("flux_root/stores/search_store");
 var UiConstants = require("flux_root/constants/ui_constants");
 
 var DeveloperList = React.createClass({
@@ -38,7 +40,8 @@ var DeveloperList = React.createClass({
       WatchEvent: "Starred at"
     };
     var developers = DevelopersStore.getDevelopers();
-    var filterRegex = new RegExp(this.props.filter, "gi");
+    var query = SearchStore.getQuery();
+    var filterRegex = new RegExp(query, "gi");
 
     var filteredDevelopers = developers.filter(function(developer){
       return developer.login.match(filterRegex)
