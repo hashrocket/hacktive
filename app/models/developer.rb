@@ -75,8 +75,8 @@ end
 #
 # Name  SQL Type             Null    Default Primary
 # ----- -------------------- ------- ------- -------
-# id    integer              false           true
-# login text                 false           false
-# name  text                 true            false
+# id    integer              false           true   
+# login text                 false           false  
+# name  text                 true            false  
 #
 #------------------------------------------------------------------------------

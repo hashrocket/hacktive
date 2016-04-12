@@ -25,7 +25,7 @@ const DeveloperCard = (props) => {
           <span className="description">{marshalledActivity.description}</span>
           <span className="activity-url">
             <a
-              href={marshalledActivity.url}
+              href={marshalledActivity.activityUrl}
               target="_blank"
             >
               <i className="fa fa-external-link-square icon" aria-hidden="true"></i>
@@ -38,6 +38,7 @@ const DeveloperCard = (props) => {
 
   const marshallActivity = (activity) => {
     var result = {
+      activityUrl: activity.activity_url,
       repoName: activity.repo_name,
       repoUrl: `https://github.com/${activity.repo_name}`
 
