@@ -3,7 +3,10 @@
   "description": "A social list of Github activity",
   "version": "1.0.0",
   "babel": {
-    "presets": ["es2015", "react"]
+    "presets": [
+      "es2015",
+      "react"
+    ]
   },
   "devDependencies": {
     "babel-core": "^6.6.5",
@@ -18,26 +21,33 @@
     "imports-loader": "^0.6.3",
     "jest-cli": "^0.10.0",
     "jquery": "^2.2.1",
-    "lodash": "^2.4.1",
+    "lodash": "^4.10.0",
     "moment": "^2.12.0",
-    "react-addons-test-utils": "^0.14.8",
     "webpack": "^1.4.13"
   },
   "dependencies": {
     "es6-promise": "^3.1.2",
+    "font-awesome": "^4.5.0",
+    "lodash": "^4.10.0",
     "object-assign": "^4.0.1",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7"
+    "react": "^15.0.1",
+    "react-addons-test-utils": "^15.0.1",
+    "react-dom": "^15.0.1"
   },
   "jest": {
     "globals": {
       "flux_root": "<rootDir>/app/frontend/javascripts/flux",
       "js_root": "<rootDir>/app/frontend/javascripts"
     },
-    "moduleFileExtensions": ["js", "jsx"],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
     "preprocessCachingDisabled": true,
     "testDirectoryName": "jest",
-    "testPathDirs": ["<rootDir>/test"],
+    "testPathDirs": [
+      "<rootDir>/test"
+    ],
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",

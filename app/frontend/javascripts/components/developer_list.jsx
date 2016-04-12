@@ -3,6 +3,7 @@ var React = require("react");
 var ReactDOM = require("react-dom");
 
 var DevelopersActions = require("flux_root/actions/developers_actions");
+import DeveloperCard from "js_root/components/developer_card";
 var DevelopersStore = require("flux_root/stores/developers_store");
 var SearchStore = require("flux_root/stores/search_store");
 var UiConstants = require("flux_root/constants/ui_constants");
@@ -56,52 +57,10 @@ var DeveloperList = React.createClass({
       ).format(UiConstants.DATETIME_FORMATS.FORMAT1);
 
       return (
-        <li
-          className="developer"
+        <DeveloperCard
+          developer={developer}
           key={i}
-        >
-          <table>
-            <tbody>
-              <tr>
-                <td className="img-cell">
-                  <img
-                    className="avatar"
-                    src={`https://avatars.githubusercontent.com/u/${developer.id}`}
-                  />
-                </td>
-
-                <td className="text-cell">
-                  {/* User */}
-                  <div className="user">
-                    <span className="text name">{developer.name}</span>
-                    <span className="text username">{"@"+developer.login}</span>
-                    {/*TODO: Finish*/}
-                    {/*(<span>{developer.activity}</span>*/}
-                  </div>
-
-                  {/* Project */}
-                  <div className="project">
-                    <a
-                      href={`https://github.com/${mostRecentActivity.repo_name}`}
-                      target="_blank"
-                    >
-                      <span className="text project">
-                        {mostRecentActivity.repo_name}
-                      </span>
-                    </a>
-                  </div>
-
-                  <div className="stats">
-                    {/* Last Commit */}
-                    <span className="text commit-datetime">
-                      {`${activityLookup[mostRecentActivity.event_type]}: ${timestamp}`}
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </li>
+        />
       )
     })
 
