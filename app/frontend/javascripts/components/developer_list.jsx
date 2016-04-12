@@ -44,7 +44,9 @@ var DeveloperList = React.createClass({
     var filterRegex = new RegExp(query, "gi");
 
     var filteredDevelopers = developers.filter(function(developer){
-      return developer.login.match(filterRegex)
+      var matchString = `${developer.login} ${developer.name}`
+
+      return matchString.match(filterRegex);
     })
 
     var developerCards = filteredDevelopers.map(function(developer, i){
