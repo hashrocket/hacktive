@@ -18,7 +18,9 @@ gem "uglifier"
 
 group :development, :test do
   gem "annotate_models"
+  gem "awesome_print"
   gem "pry-byebug"
+  gem "pry-rails"
   gem "rspec-rails"
 end
 
