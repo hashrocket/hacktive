@@ -24,6 +24,11 @@
   #{$property}: -o-#{$value}
   #{$property}: -webkit-#{$value}
 
+@mixin ellipsis
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+
 @mixin full
   height: 100%
   width: 100%

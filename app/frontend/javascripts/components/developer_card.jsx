@@ -1,42 +1,44 @@
 import React, { PropTypes } from 'react';
-import { values } from 'lodash';
+import { get } from 'lodash';
+
 
 const DeveloperCard = (props) => {
   const renderRecentActivity = () => {
     const activities = props.developer.activities;
-    console.log(activities);
 
     return activities.slice(0, 3).map((activity, i) => {
       const marshalledActivity = marshallActivity(activity);
 
       return (
         <li key={i} className="activity">
-          <span className="repo">
-            <a
-              className="repo-url"
-              href={marshalledActivity.repoUrl}
-              target="_blank"
-            >
-              <span className="octicon octicon-repo icon" />
-              <span className="text">{marshalledActivity.repoName}</span>
-            </a>
-          </span>
-          <span className="type">{marshalledActivity.type}</span>
-          <span className="description">{marshalledActivity.description}</span>
-          <span className="activity-url">
-            <a
-              href={marshalledActivity.activityUrl}
-              target="_blank"
-            >
-              <i className="fa fa-external-link-square icon" aria-hidden="true"></i>
-            </a>
-          </span>
+          <a
+            className="repo"
+            href={marshalledActivity.repoUrl}
+            target="_blank"
+          >
+            <span className="octicon octicon-repo icon" />
+            <span className="text">{marshalledActivity.repoName}</span>
+          </a>
+
+          <a
+            className="message"
+            href={marshalledActivity.activityUrl}
+            target="_blank"
+          >
+            <span className="type">{marshalledActivity.type}</span>
+            <span className="description">{marshalledActivity.description}</span>
+            <div className="status">
+              <span className="text">{marshalledActivity.action}</span>
+              <span className={`indicator ${marshalledActivity.action}`} />
+            </div>
+          </a>
         </li>
       );
     });
   };
 
   const marshallActivity = (activity) => {
+    var payload = activity.payload;
     var result = {
       activityUrl: activity.activity_url,
       repoName: activity.repo_name,
@@ -45,15 +47,26 @@ const DeveloperCard = (props) => {
     };
 
     switch (activity.event_type) {
-      case 'PushEvent': {
-        result.type = 'Push';
-        result.description = values(activity.payload)[0];
+      case 'IssuesEvent': {
+        result.action = payload.action;
+        result.description = payload.message;
+        result.type = 'Issue';
+
         break;
       }
 
       case 'PullRequestEvent': {
+        result.action = payload.action;
+        result.description = payload.message;
         result.type = 'Pull Request';
-        result.description = 'test';
+
+        break;
+      }
+
+      case 'PushEvent': {
+        result.type = 'Push';
+        result.description = get(payload, 'commits[0].message', 'No commit messages').split('\n\n')[0];
+
         break;
       }
     }

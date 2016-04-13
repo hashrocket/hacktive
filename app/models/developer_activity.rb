@@ -38,7 +38,7 @@ class DeveloperActivity < ActiveRecord::Base
           commits = payload['commits']
           payload_json = {}
           payload_json['commits'] = commits.map do |commit|
-            commit.slice('sha', 'message')
+            commit.to_h.slice(:message, :sha)
           end
 
           activity_url = "https://github.com/#{repo_name}/commit/#{commits.first['sha']}"
