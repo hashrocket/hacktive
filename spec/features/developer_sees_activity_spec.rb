@@ -156,7 +156,7 @@ RSpec.feature "Hacker list" do
     expect(top_developer["name"]).to eq "Vidal Ekechukwu"
     expect(top_developer["login"]).to eq "VEkh"
     expect(most_recent_activity["repo_name"]).to eq "VEkh/sideprojects"
-    expect(most_recent_activity["payload"].values).to include "Migrating to Hashrocket git"
+    expect(most_recent_activity["payload"]["commits"].first["message"]).to eq "Migrating to Hashrocket git"
   end
 
   scenario "Developer sees commit to github project", type: :request do
@@ -213,7 +213,7 @@ RSpec.feature "Hacker list" do
 
     expect(top_developer["login"]).to eq 'VEkh'
     expect(most_recent_activity['repo_name']).to eq 'VEkh/sideprojects'
-    expect(most_recent_activity['payload'].values).to include 'Migrating to Hashrocket git'
+    expect(most_recent_activity["payload"]["commits"].first["message"]).to eq "Migrating to Hashrocket git"
   end
 
   scenario "Developer sees issue action on github project", type: :request do
@@ -260,7 +260,7 @@ RSpec.feature "Hacker list" do
 
     expect(top_developer["login"]).to eq 'chriserin'
     expect(most_recent_activity['repo_name']).to eq 'chriserin/seq27'
-    expect(most_recent_activity['payload']['128439611']).to eq 'closed'
+    expect(most_recent_activity['payload']['action']).to eq 'closed'
   end
 
   scenario "Developer sees pull request to github project", type: :request do
@@ -315,7 +315,7 @@ RSpec.feature "Hacker list" do
 
     expect(top_developer["login"]).to eq 'chriserin'
     expect(most_recent_activity['repo_name']).to eq 'hashrocket/hr_hotels'
-    expect(most_recent_activity['payload']['57790579']).to eq 'opened'
+    expect(most_recent_activity['payload']['action']).to eq 'opened'
   end
 
   scenario 'Developer sees time description for a recent commit', type: :request do
