@@ -54,7 +54,7 @@ end
 # Name              SQL Type             Null    Default Primary
 # ----------------- -------------------- ------- ------- -------
 # id                integer              false           true
-# payload           hstore               false           false
+# payload           jsonb                false           false
 # developer_id      integer              false           false
 # event_occurred_at timestamp with time zone false           false
 # event_id          bigint               false           false
