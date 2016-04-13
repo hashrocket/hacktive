@@ -1,48 +1,59 @@
 class DeveloperActivity < ActiveRecord::Base
+  include Upsertable
+  store_accessor :payload
+
   belongs_to :developer
 
   def self.create_with_json(activities)
     activities.each do |activity|
       actor = activity['actor']
       event_type = activity['type']
+      payload = activity['payload']
       repo_name = activity['repo']['name']
 
       if !EventType::TYPE_WHITELIST.include?(event_type)
         next
       end
 
-      payload = activity['payload']
-
       case event_type
         when 'IssuesEvent'
           issue = payload['issue']
-          set_payload = {issue['id'] => payload['action']}
-
           activity_url = issue['html_url']
+
+          payload_json = {
+            'action' => payload['action'],
+            'id' => issue['id'],
+            'message' => issue['title']
+          }
         when 'PullRequestEvent'
           pull_request = payload['pull_request']
-          set_payload = {pull_request['id'] => payload['action']}
-
           activity_url = pull_request['html_url']
+
+          payload_json = {
+            'action' => payload['action'],
+            'id' => pull_request['id'],
+            'message' => pull_request['title']
+          }
         when 'PushEvent'
           commits = payload['commits']
-          set_payload = commits.reduce({}) do |object, commit|
-            object[commit['sha']] = commit['message']
-            object
+          payload_json = {}
+          payload_json['commits'] = commits.map do |commit|
+            commit.slice('sha', 'message')
           end
 
           activity_url = "https://github.com/#{repo_name}/commit/#{commits.first['sha']}"
       end
-
-      self.where(
-        event_id: activity['id']
-      ).first_or_create!(
-        activity_url: activity_url,
-        developer_id: activity['actor']['id'],
-        event_occurred_at: activity['created_at'],
-        event_type: event_type,
-        payload: set_payload,
-        repo_name: repo_name
+      developer_activity = self.upsert!(
+        {event_id: activity['id']},
+        {
+          activity_url: activity_url,
+          developer_id: activity['actor']['id'],
+          event_occurred_at: activity['created_at'],
+          event_id: activity['id'],
+          event_type: event_type,
+          payload: payload_json,
+          repo_name: repo_name
+        }
       )
     end
   end
