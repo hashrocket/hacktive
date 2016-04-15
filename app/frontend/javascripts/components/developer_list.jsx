@@ -1,4 +1,3 @@
-var moment = require("moment");
 var React = require("react");
 var ReactDOM = require("react-dom");
 
@@ -52,9 +51,6 @@ var DeveloperList = React.createClass({
 
     var developerCards = filteredDevelopers.map(function(developer, i){
       var mostRecentActivity = developer.activities[0];
-      var timestamp = moment(
-        mostRecentActivity.event_occurred_at
-      ).format(UiConstants.DATETIME_FORMATS.FORMAT1);
 
       return (
         <DeveloperCard

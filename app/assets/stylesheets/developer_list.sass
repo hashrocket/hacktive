@@ -34,72 +34,76 @@
           &.username
             font-size: $font_xsmall
 
-    .activities .activity
-      @include transition
-      align-content: center
-      align-items: stretch
-      border-top: $border_width0 solid #CCC
-      display: flex
-      justify-content: flex-start
-
-      & > *
-        padding: .5em
-
-      .repo
-        @include ellipsis
+    .activities
+      .activity
         @include transition
-        align-items: center
-        background: #f3f3f3
-        border-right: $border_width0 solid #CCC
+        align-items: flex-start
+        background: #F7F7F7
+        border-top: $border_width0 solid #CCC
         display: flex
-        text-decoration: none
-        width: 10em
 
         &:hover
-          background: #e0e0e0
-          text-decoration: underline
+          background: #E6E6E6
 
-
-        .icon
-          margin-right: 1ex
-
-        .text
-          @include ellipsis
-          max-width: 8em
-
-      .message
-        @include transition
-        align-items: center
-        display: flex
-        flex-grow: 1
-        justify-content: flex-start
-        text-decoration: none
-
-        &:hover
-          background: #e3e3e3
-
-        .description
-          @include ellipsis
-          margin-left: 1ex
-          max-width: 30em
-
-        .type
-          background: lightgray
-          border: 0.2ex solid darkgray
-          border-radius: .1em
+        .info
           display: flex
-          padding: 0.5ex
+          flex-direction: column
+          flex-grow: 1
+          padding: 0.5em
 
-        .status
+          & > *
+            text-decoration: none
+
+          .repo
+            .icon
+              margin-right: 0.5em
+
+            .text
+              font-size: $font_small
+              font-weight: 700
+
+            &:hover
+              cursor: pointer
+
+              .text
+                text-decoration: underline
+
+          .description
+            align-items: center
+            display: flex
+
+            &:hover
+              cursor: pointer
+
+              .message
+                text-decoration: underline
+
+            .message
+              @include ellipsis
+              color: #828282
+              font-size: $font_xsmall
+              max-width: 30em
+
+        .time
           align-items: center
           display: flex
-          justify-content: flex-end
-          margin-left: auto
+          padding: 1ex
 
-          .indicator
-            @include border_radius(100%)
-            @include square(1.5ex)
-            display: block
+          .icon
+            margin-right: 0.5em
+
+          .text
+            font-size: 0.7em
+
+        .status
+          align-items: stretch
+          display: flex
+          justify-content: flex-end
+          margin-right: 0.2em
+
+          .action
+            @include border_radius(0 $border_radius0 $border_radius0 0)
+            padding: 0.25ex
 
             &.opened
               background: #6cc644
@@ -107,14 +111,22 @@
             &.closed
               background: #bd2c00
 
-          .text
-            color: #acacac
-            margin-right: 1ex
+          .type
+            @include border_radius
+            align-items: center
+            background: #e6e6e6
+            border-radius: .1em
+            display: flex
+            flex-basis: 100%
+            padding: 0 0.5ex
+            justify-content: center
 
-    &:hover
-      @include box_shadow(0 0 1.5ex 0 rgba(0, 0, 0, 0.2))
-      background: #F9F9F9
-      cursor: pointer
+            .icon
+              font-size: $font_small
+              margin-right: 0.5em
+
+            .text
+              font-size: $font_xxsmall
 
     .project
       color: $red0
