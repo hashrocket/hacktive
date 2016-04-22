@@ -1,8 +1,6 @@
 import moment from 'moment';
-import React, { PropTypes } from 'react';
-import { get } from 'lodash';
 
-import UiConstants from 'flux_root/constants/ui_constants';
+import UiConstants from 'flux/constants/ui_constants';
 
 const DeveloperCard = React.createClass({
   marshallActivity: function(activity){
@@ -39,7 +37,11 @@ const DeveloperCard = React.createClass({
       }
 
       case 'PushEvent': {
-        result.description = get(payload, 'commits[0].message', 'No commit messages').split('\n\n')[0];
+        const firstCommit = payload.commits[0] || {
+          message: "No commit messages"
+        }
+
+        result.description = firstCommit.message.split('\n\n')[0];
         result.type = 'Push';
         result.typeIcon = 'octicon-git-commit';
 

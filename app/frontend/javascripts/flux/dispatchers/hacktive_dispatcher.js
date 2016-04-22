@@ -1,7 +1,6 @@
-var Dispatcher = require('flux_root/dispatchers/dispatcher');
-var assign = require('object-assign');
+import Dispatcher from 'flux/dispatchers/dispatcher';
+import assign from 'object-assign';
 
-var HacktiveDispatcher = assign({}, Dispatcher.prototype, {
-});
+const HacktiveDispatcher = assign({}, Dispatcher.prototype, {});
 
 module.exports = HacktiveDispatcher;

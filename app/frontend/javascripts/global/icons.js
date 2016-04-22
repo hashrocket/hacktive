@@ -1,4 +1,4 @@
-var ICONS = {
+const ICONS = {
   filter: {
     black: "/assets/icons/filter_black.png"
   },

@@ -1,13 +1,8 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
+import SearchActions from "flux/actions/search_actions";
+import SearchStore from "flux/stores/search_store";
 
-var SearchActions = require("flux_root/actions/search_actions");
-var SearchStore = require("flux_root/stores/search_store");
-
-// Search
-var Search = React.createClass({
+const Search = React.createClass({
   onFormSubmit: function(event){
-    // Prevent default form submission
     event.preventDefault()
   },
 

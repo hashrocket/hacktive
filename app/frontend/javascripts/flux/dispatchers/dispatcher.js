@@ -1,10 +1,10 @@
-var Promise = require('es6-promise').Promise;
-var assign = require('object-assign');
+const Promise = require('es6-promise').Promise;
+import assign from 'object-assign';
 
 var _callbacks = [];
 var _promises = [];
 
-var Dispatcher = function() {};
+const Dispatcher = function() {};
 Dispatcher.prototype = assign({}, Dispatcher.prototype, {
   dispatch: function(payload) {
     // First create array of promises for callbacks to reference.

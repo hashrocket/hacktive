@@ -1,13 +1,10 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
+import DevelopersActions from "flux/actions/developers_actions";
+import DeveloperCard from "components/developer_card";
+import DevelopersStore from "flux/stores/developers_store";
+import SearchStore from "flux/stores/search_store";
+import UiConstants from "flux/constants/ui_constants";
 
-var DevelopersActions = require("flux_root/actions/developers_actions");
-import DeveloperCard from "js_root/components/developer_card";
-var DevelopersStore = require("flux_root/stores/developers_store");
-var SearchStore = require("flux_root/stores/search_store");
-var UiConstants = require("flux_root/constants/ui_constants");
-
-var DeveloperList = React.createClass({
+const DeveloperList = React.createClass({
   componentDidMount: function(){
     var self = this;
 

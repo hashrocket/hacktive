@@ -1,5 +1,4 @@
-// Flux Constants
-var UiConstants = {
+const UiConstants = {
   DATETIME_FORMATS: {
     FORMAT0: "ddd, MMMM Do YYYY @ hh:mma",
     FORMAT1: "MMM Do, YYYY @ hh:mma",

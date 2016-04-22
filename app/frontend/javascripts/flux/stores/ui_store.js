@@ -1,10 +1,10 @@
-var assign = require("object-assign");
-var EventEmitter = require("events").EventEmitter;
-var HacktiveDispatcher = require("flux_root/dispatchers/hacktive_dispatcher");
+import assign from "object-assign";
+import { EventEmitter } from "events";
+import HacktiveDispatcher from "flux/dispatchers/hacktive_dispatcher";
 
-var CHANGE_EVENT = "change";
+const CHANGE_EVENT = "change";
 
-var UiStore = assign({}, EventEmitter.prototype, {
+const UiStore = assign({}, EventEmitter.prototype, {
   addChangeListener: function(callback) {
     this.on(CHANGE_EVENT, callback);
   },

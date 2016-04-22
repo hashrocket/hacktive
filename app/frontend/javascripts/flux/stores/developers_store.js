@@ -1,12 +1,12 @@
-var assign = require("object-assign");
-var DevelopersConstants = require("flux_root/constants/developers_constants")
-var EventEmitter = require("events").EventEmitter;
-var HacktiveDispatcher = require("flux_root/dispatchers/hacktive_dispatcher");
-var UiStore = require("flux_root/stores/ui_store");
+import assign from "object-assign";
+import DevelopersConstants from "flux/constants/developers_constants";
+import { EventEmitter } from "events";
+import HacktiveDispatcher from "flux/dispatchers/hacktive_dispatcher";
+import UiStore from "flux/stores/ui_store";
 
-var _developers = []
+let _developers = []
 
-var DevelopersStore = assign({}, EventEmitter.prototype, {
+const DevelopersStore = assign({}, EventEmitter.prototype, {
   dispatcherIndex: HacktiveDispatcher.register(function(payload) {
     var action = payload.action;
     var args = payload.args;

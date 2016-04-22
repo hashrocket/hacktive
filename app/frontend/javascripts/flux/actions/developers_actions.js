@@ -1,7 +1,7 @@
-var DevelopersConstants = require("flux_root/constants/developers_constants");
-var HacktiveDispatcher = require("flux_root/dispatchers/hacktive_dispatcher");
+import DevelopersConstants from "flux/constants/developers_constants";
+import HacktiveDispatcher from "flux/dispatchers/hacktive_dispatcher";
 
-var DevelopersActions = {
+const DevelopersActions = {
   setDevelopers: function(args, callback){
     HacktiveDispatcher.dispatch({
       action: DevelopersConstants.DEVELOPERS_SET_DEVELOPERS,

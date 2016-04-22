@@ -1,38 +1,13 @@
 var path = require("path");
 var webpack = require("webpack");
+var javascripts_root = "./app/frontend/javascripts";
 
 var config = module.exports = {
   context: path.join(__dirname, "../", "../")
 };
 
 config.entry = {
-  entry: "./app/frontend/javascripts/entry.jsx"
-}
-
-config.output = {
-  devtoolFallbackModuleFilenameTemplate: "[resourcePath]?[hash]",
-  devtoolModuleFilenameTemplate: "[resourcePath]",
-  filename: "bundle.js",
-  path: path.resolve("./app/assets/javascripts"),
-  publicPath: "/assets"
-};
-
-config.plugins = [
-  new webpack.ProvidePlugin({
-    $: "jquery",
-    jQuery: "jquery",
-    moment: "moment"
-  })
-];
-
-config.resolve = {
-  alias: {
-    flux_root: path.resolve("./app/frontend/javascripts/flux"),
-    js_root: path.resolve("./app/frontend/javascripts")
-  },
-  extensions: ["", ".js", ".jsx"],
-  modulesDirectories: [ "node_modules" ],
-  root: path.resolve("./app/frontend/javascripts"),
+  bundle: `${javascripts_root}/entry.jsx`
 };
 
 config.module = {
@@ -46,4 +21,31 @@ config.module = {
       test: /\.jsx?$/
     }
   ]
+};
+
+config.output = {
+  devtoolFallbackModuleFilenameTemplate: "[resourcePath]?[hash]",
+  devtoolModuleFilenameTemplate: "[resourcePath]",
+  filename: "[name].js",
+  path: path.resolve("./app/assets/javascripts"),
+  publicPath: "/assets"
+};
+
+config.plugins = [
+  new webpack.ProvidePlugin({
+    $: "jquery",
+    jQuery: "jquery",
+    React: "react",
+    ReactDOM: "react-dom"
+  })
+];
+
+config.resolve = {
+  alias: {
+    components: path.resolve(`${javascripts_root}/components`),
+    flux: path.resolve(`${javascripts_root}/flux`),
+    javascripts: path.resolve(javascripts_root)
+  },
+  extensions: ["", ".js", ".jsx"],
+  modulesDirectories: [ "node_modules" ]
 };

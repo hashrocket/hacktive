@@ -1,9 +1,7 @@
-var DeveloperList = require("js_root/components/developer_list");
-var ICONS = require("js_root/global/icons")
-var React = require("react");
-var ReactDOM = require("react-dom");
-var Search = require("js_root/components/search");
-var UiStore = require("flux_root/stores/ui_store");
+import DeveloperList from "components/developer_list";
+import ICONS from "javascripts/global/icons"
+import Search from "components/search";
+import UiStore from "flux/stores/ui_store";
 
 var HacktiveApp = React.createClass({
   componentDidMount: function(){

@@ -1,7 +1,7 @@
-var SearchConstants = require("flux_root/constants/search_constants");
-var HacktiveDispatcher = require("flux_root/dispatchers/hacktive_dispatcher");
+import SearchConstants from "flux/constants/search_constants";
+import HacktiveDispatcher from "flux/dispatchers/hacktive_dispatcher";
 
-var SearchActions = {
+const SearchActions = {
   setQuery: function(args, callback){
     HacktiveDispatcher.dispatch({
       action: SearchConstants.SEARCH_SET_QUERY,

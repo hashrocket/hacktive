@@ -1,8 +1,4 @@
-var React = require("react");
-var ReactDOM = require("react-dom");
-
-// Image With Text
-var ImageWithText = React.createClass({
+const ImageWithText = React.createClass({
   getImageStyle: function(url){
     return {
       backgroundImage: "url("+url+")"
