@@ -1,3 +1,4 @@
+import React from 'react';
 import moment from 'moment';
 
 import UiConstants from 'flux/constants/ui_constants';

@@ -31,15 +31,6 @@ config.output = {
   publicPath: "/assets"
 };
 
-config.plugins = [
-  new webpack.ProvidePlugin({
-    $: "jquery",
-    jQuery: "jquery",
-    React: "react",
-    ReactDOM: "react-dom"
-  })
-];
-
 config.resolve = {
   alias: {
     components: path.resolve(`${javascripts_root}/components`),
@@ -47,5 +38,5 @@ config.resolve = {
     javascripts: path.resolve(javascripts_root)
   },
   extensions: ["", ".js", ".jsx"],
-  modulesDirectories: [ "node_modules" ]
+  modulesDirectories: [ "node_modules" ],
 };

@@ -1,3 +1,6 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import SearchActions from "flux/actions/search_actions";
 import SearchStore from "flux/stores/search_store";
 

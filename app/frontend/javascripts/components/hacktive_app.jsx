@@ -1,3 +1,5 @@
+import React from 'react';
+
 import DeveloperList from "components/developer_list";
 import ICONS from "javascripts/global/icons"
 import Search from "components/search";

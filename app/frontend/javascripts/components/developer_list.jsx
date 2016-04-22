@@ -1,3 +1,6 @@
+import $ from "jquery";
+import React from 'react';
+
 import DevelopersActions from "flux/actions/developers_actions";
 import DeveloperCard from "components/developer_card";
 import DevelopersStore from "flux/stores/developers_store";

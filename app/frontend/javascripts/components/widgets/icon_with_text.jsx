@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ImageWithText = React.createClass({
   getImageStyle: function(url){
     return {
