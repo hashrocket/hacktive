@@ -1,12 +1,8 @@
-var searchModulePath = `${js_root}/components/search`;
+import React from "react";
+import ReactDOM from "react-dom";
+import TestUtils from "react-addons-test-utils";
 
-jest.unmock(searchModulePath)
-
-var React = require("react");
-var ReactDOM = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
-
-var Search = require(searchModulePath);
+import Search from "components/search";
 
 describe("DeveloperList", function(){
   it("updates with search", function(){

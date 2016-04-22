@@ -35,14 +35,16 @@
     "react-dom": "^15.0.1"
   },
   "jest": {
-    "globals": {
-      "flux_root": "<rootDir>/app/frontend/javascripts/flux",
-      "js_root": "<rootDir>/app/frontend/javascripts"
-    },
+    "automock": false,
     "moduleFileExtensions": [
       "js",
       "jsx"
     ],
+    "moduleNameMapper": {
+      "components/(.*)": "<rootDir>/app/frontend/javascripts/components/$1.jsx",
+      "flux/(.*)": "<rootDir>/app/frontend/javascripts/flux/$1.js",
+      "javascripts/(.*)": "<rootDir>/app/frontend/javascripts/$1.js"
+    },
     "preprocessCachingDisabled": true,
     "testDirectoryName": "jest",
     "testPathDirs": [
