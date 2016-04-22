@@ -4,7 +4,7 @@ class DeveloperActivity < ActiveRecord::Base
 
   def self.create_with_json(activities)
     activities.each do |activity|
-      activity.to_h.with_indifferent_access
+      activity = activity.to_h.with_indifferent_access
 
       actor = activity["actor"]
       event_type = activity["type"]
@@ -36,6 +36,7 @@ class DeveloperActivity < ActiveRecord::Base
           }
         when "PushEvent"
           commits = payload["commits"]
+
           payload_json = {}
           payload_json["commits"] = commits.map do |commit|
             commit.slice("message", "sha")
