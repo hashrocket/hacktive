@@ -1,5 +1,6 @@
-import $ from "jquery";
+import $ from 'jquery';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import DevelopersActions from "flux/actions/developers_actions";
 import DeveloperCard from "components/developer_card";

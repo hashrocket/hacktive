@@ -1,5 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
+
 var javascripts_root = "./app/frontend/javascripts";
 
 var config = module.exports = {
