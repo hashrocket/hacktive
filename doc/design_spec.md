@@ -1,5 +1,4 @@
 # [Hacktive](https://hashrocket-hacktive-staging.herokuapp.com) Design Spec
----
 
 ### General Remarks
 * **Color Scheme**
