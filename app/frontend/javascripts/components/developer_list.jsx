@@ -20,8 +20,6 @@ const DeveloperList = React.createClass({
   },
 
   fetch: function(){
-    var self = this;
-
     $.ajax({
       contentType: "application/json",
       dataType: "json",
