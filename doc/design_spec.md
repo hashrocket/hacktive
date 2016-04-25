@@ -18,6 +18,7 @@
 
 ### Developer Card
 > A card that shows a developer and his most recent Github activities. It is divided into two sections:
+
 1. Top
     * Developer full name (links to user's Github account)
     * Developer's Github handle (links to user's Github account)
