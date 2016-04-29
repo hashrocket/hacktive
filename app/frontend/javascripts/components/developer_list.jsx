@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 
 import DevelopersActions from "flux/actions/developers_actions";
 import DeveloperCard from "components/developer_card";
-import DevelopersStore from "flux/stores/developers_store";
+import DeveloperStore from "flux/stores/developer_store";
 import SearchStore from "flux/stores/search_store";
 import UiConstants from "flux/constants/ui_constants";
 
@@ -38,7 +38,7 @@ const DeveloperList = React.createClass({
       PushEvent: "Committed at",
       WatchEvent: "Starred at"
     };
-    var developers = DevelopersStore.getDevelopers();
+    var developers = DeveloperStore.getDevelopers();
     var query = SearchStore.getQuery();
     var filterRegex = new RegExp(query, "gi");
 

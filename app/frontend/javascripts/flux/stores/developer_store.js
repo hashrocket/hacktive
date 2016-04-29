@@ -6,7 +6,7 @@ import UiStore from "flux/stores/ui_store";
 
 let _developers = []
 
-const DevelopersStore = assign({}, EventEmitter.prototype, {
+const DeveloperStore = assign({}, EventEmitter.prototype, {
   dispatcherIndex: HacktiveDispatcher.register(function(payload) {
     var action = payload.action;
     var args = payload.args;
@@ -14,7 +14,7 @@ const DevelopersStore = assign({}, EventEmitter.prototype, {
 
     switch(action) {
       case DevelopersConstants.DEVELOPERS_SET_DEVELOPERS: {
-        DevelopersStore.setDevelopers(args)
+        DeveloperStore.setDevelopers(args)
 
         UiStore.emitChange()
       }
@@ -34,4 +34,4 @@ const DevelopersStore = assign({}, EventEmitter.prototype, {
   }
 });
 
-module.exports = DevelopersStore;
+module.exports = DeveloperStore;
