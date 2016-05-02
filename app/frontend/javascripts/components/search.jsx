@@ -23,14 +23,6 @@ const Search = React.createClass({
           action="/search"
           onSubmit={this.onFormSubmit}
         >
-          {/* TODO: Uncomment */}
-          {/*<div className="filter-btn">
-            <ImageWithText
-              _class="btn-gray wrapper"
-              image={{src: ICONS.filter.black}}
-            />
-          </div>*/}
-
           <input
             autoComplete="off"
             className="input"
