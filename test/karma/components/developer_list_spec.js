@@ -21,12 +21,11 @@ describe("Developer List", function(){
   }));
 
   it("shows fetched developers", function(){
-    const developer = chai.create("developer")
+    const developers = [chai.create("developer")];
 
-    DeveloperStore.setDevelopers([developer])
+    DeveloperStore.setDevelopers(developers)
 
     const developerList = ReactTestUtils.renderIntoDocument(<DeveloperList/>);
-    const developerListNode = ReactDOM.findDOMNode(developerList);
     const developerCards = ReactTestUtils.scryRenderedComponentsWithType(
       developerList,
       DeveloperCard

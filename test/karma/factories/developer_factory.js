@@ -1,27 +1,27 @@
 import _ from "lodash";
 
 chai.factory("developer", {
-  "id": 551858,
-  "login": "dkarter",
-  "name": "Dorian Karter",
-  "activities":  [
+  "id": 735821,
+  "login": "VEkh",
+  "name": "Vidal Ekechukwu",
+  "activities": [
     {
-      "id": 591,
-      "payload":  {
-        "commits":  [
+      "id": 353,
+      "payload": {
+        "commits": [
           {
-            "sha": "f5bd84aaca6f709ff8a85c17e28f96f979da9cf3",
-            "message": "Move local aliases load to bottom"
+            "sha": "a9f85190fd7c474b0f71c060a8daf457e5096437",
+            "message": "Demo-ing Hacktive"
           }
-        ],
-        "developer_id": 551858,
-        "event_occurred_at": "2016-04-26T04:05:15+00:00",
-        "event_id": 3935281789,
-        "event_type": "PushEvent",
-        "repo_name": "dkarter/dotfiles",
-        "created_at": "2016-04-26T04:16:18.025899+00:00",
-        "activity_url": "https://github.com/dkarter/dotfiles/commit/f5bd84aaca6f709ff8a85c17e28f96f979da9cf3"
-      }
+        ]
+      },
+      "developer_id": 735821,
+      "event_occurred_at": "2016-03-11 16:36:17 UTC",
+      "event_id": 3752523961,
+      "event_type": "PushEvent",
+      "repo_name": "VEkh/sideprojects",
+      "created_at": "2016-04-12 22:05:18 UTC",
+      "activity_url": "https://github.com/VEkh/sideprojects/commit/a9f85190fd7c474b0f71c060a8daf457e5096437"
     }
   ]
 });
