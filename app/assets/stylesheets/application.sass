@@ -42,94 +42,79 @@ ul.squares
 					left: random(300) +vw
 					top: random(100) + vw
 
-body
-	> header
-		background: $red
-		overflow: hidden
-		max-height: 500px
+#header
+	background: $red
+	overflow: hidden
+	max-height: 500px
+	position: relative
+	ul.squares li
+		background: darken($red, 20%)
+		border: 2px solid darken($red, 30%)
+		animation: drop 20s ease-in-out infinite alternate
+	.container
+		text-align: center
+		padding: 4em 0
 		position: relative
-		ul.squares li
-			background: darken($red, 20%)
-			border: 2px solid darken($red, 30%)
-			animation: drop 20s ease-in-out infinite alternate
-		.container
-			text-align: center
-			padding: 4em 0
-			position: relative
-			z-index: 5
-			h1
-				text-indent: 100%
-				white-space: nowrap
-				overflow: hidden
-				display: block
-				background: image-url("logo_hacktive.svg") center center no-repeat
-				width: 42vw
-				height: 17vw
-				margin: 0 auto .5em
-				z-index: 5
-			h2
-				color: lighten($red, 30%)
-				font-size: 1em
-				text-transform: uppercase
-				letter-spacing: 4px
-				z-index: 5
-				img
-					width: 1em
-					height: 1em
-				a
-					color: lighten($red, 30%)
-					transform: color 300ms
-					&:hover
-						color: lighten($red, 40%)
-			form
-				z-index: 5
-				fieldset
-					border: 0
-					margin: 45px 0
-					::-webkit-input-placeholder
-						color: lighten($red, 25%)
-					:-moz-placeholder
-						color: lighten($red, 25%)
-					::-moz-placeholder
-						color: lighten($red, 25%)
-					:-ms-input-placeholder
-						color: lighten($red, 25%)
-					input[type="search"]
-						color: lighten($red, 25%)
-						font-family: "League Spartan", sans-serif
-						font-size: 12px
-						letter-spacing: 2px
-						text-transform: uppercase
-						background: $red image-url("img_search.svg") 10px 9px no-repeat
-						background-size: 16px 16px
-						border: 2px solid lighten($red, 10%)
-						padding: 10px 10px 10px 40px
-						transition: border 300ms
-						box-sizing: border-box
-						width: 45%
-						&:hover, &:focus
-							color: $white
-							border: 2px solid $white
-							outline: 0
-	> footer
-		position: relative
-		overflow: hidden
-		ul.squares
+		z-index: 5
+		h1
+			text-indent: 100%
+			white-space: nowrap
+			overflow: hidden
 			display: block
-			background-color: rgba(51,51,51,1)
-			background: linear-gradient(top, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%)
-			li
-				background: darken($gray, 5%)
-				border: 2px solid darken($gray, 10%)
-				transform: rotate(-45deg)
-		.container
-			text-align: center
+			background: url(/assets/logos/logo_hacktive.svg) center center no-repeat
+			width: 42vw
+			height: 17vw
+			margin: 0 auto .5em
 			z-index: 5
+		h2
+			align-items: center
+			color: lighten($red, 30%)
+			display: flex
+			font-size: 1em
+			justify-content: center
+			letter-spacing: 4px
+			text-transform: uppercase
+			z-index: 5
+			> *
+				margin: 0 0.25em
+			img
+				height: 1em
+				width: 1em
 			a
-				display: inline-block
-				margin: 0 auto 2em
-				position: relative
-				z-index: 7
+				color: lighten($red, 30%)
+				transform: color 300ms
+				&:hover
+					color: lighten($red, 40%)
+		form
+			z-index: 5
+			fieldset
+				border: 0
+				margin: 45px 0
+				::-webkit-input-placeholder
+					color: lighten($red, 25%)
+				:-moz-placeholder
+					color: lighten($red, 25%)
+				::-moz-placeholder
+					color: lighten($red, 25%)
+				:-ms-input-placeholder
+					color: lighten($red, 25%)
+				input[type="search"]
+					color: lighten($red, 25%)
+					font-family: "League Spartan", sans-serif
+					font-size: 12px
+					letter-spacing: 2px
+					text-transform: uppercase
+					background: $red image-url("img_search.svg") 10px 9px no-repeat
+					background-size: 16px 16px
+					border: 2px solid lighten($red, 10%)
+					padding: 10px 10px 10px 40px
+					transition: border 300ms
+					box-sizing: border-box
+					width: 45%
+					&:hover, &:focus
+						color: $white
+						border: 2px solid $white
+						outline: 0
 
 section
 	+centered

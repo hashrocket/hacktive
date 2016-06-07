@@ -1,15 +1,23 @@
+const iconDirectory = "/assets/icons";
+const logoDirectory = "/assets/logos";
+const stubDirectory = "/assets/stubs";
+
 const ICONS = {
   filter: {
-    black: "/assets/icons/filter_black.png"
+    black: `${iconDirectory}/filter_black.png`
   },
+	logos: {
+		hashrocketFull: `${logoDirectory}/logo_hashrocket.svg`,
+		hashrocketIcon: `${logoDirectory}/logo_hr_mark.svg`
+	},
   star: {
-    black: "/assets/icons/star_black.png",
-    gray: "/assets/icons/star_gray.png"
+    black: `${iconDirectory}/star_black.png`,
+    gray: `${iconDirectory}/star_gray.png`
   },
   stubs: {
-    avatar: "/assets/stubs/avatar_stub.png",
-    user: "/assets/stubs/user_stub.png"
+    avatar: `${stubDirectory}/avatar_stub.png`,
+    user: `${stubDirectory}/user_stub.png`
   }
-}
+};
 
-module.exports = ICONS
+module.exports = ICONS;
