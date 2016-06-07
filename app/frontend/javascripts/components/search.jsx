@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 import SearchActions from "flux/actions/search_actions";
 import SearchStore from "flux/stores/search_store";
@@ -10,32 +10,30 @@ const Search = React.createClass({
   },
 
   onSearchChange: function(event){
-    var target = event.currentTarget;
-    var query = target.value;
+    const target = event.currentTarget;
+    const query = target.value;
 
     SearchActions.setQuery(query)
   },
 
   render: function(){
     return (
-      <div id="search">
-        <form
-          action="/search"
-          onSubmit={this.onFormSubmit}
-        >
-          <input
-            autoComplete="off"
-            className="input"
-            id="search-input"
-            onChange={this.onSearchChange}
-            placeholder="Search"
-            type="text"
-            value={SearchStore.getQuery()}
-          />
-        </form>
-      </div>
-    )
+			<form
+				action="/search"
+				onSubmit={this.onFormSubmit}
+			>
+				<fieldset>
+					<input
+						autoComplete="off"
+						onChange={this.onSearchChange}
+						placeholder="Search"
+						type="search"
+						value={SearchStore.getQuery()}
+					/>
+				</fieldset>
+			</form>
+    );
   }
-})
+});
 
-module.exports = Search
+export default Search;

@@ -4,16 +4,17 @@ Rails.application.configure do
   config.assets.digest = false
   config.assets.enabled = true
   config.assets.precompile += %w[
-		entry
 		*.css
 		*.eot
 		*.js
+		*.otf
 		*.sass
 		*.scss
 		*.svg
 		*.ttf
 		*.woff
 		*.woff2
+		entry
 		index.js
 	]
   config.assets.raise_runtime_errors = true

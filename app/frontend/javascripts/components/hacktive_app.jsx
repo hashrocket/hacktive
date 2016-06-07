@@ -1,9 +1,10 @@
 import React from 'react';
-
 import ICONS from "javascripts/global/icons"
 
 import UiStore from "flux/stores/ui_store";
 
+import DeveloperList from "components/developer_list";
+import Search from "components/search";
 import Squares from "components/squares";
 
 const HacktiveApp = React.createClass({
@@ -23,6 +24,7 @@ const HacktiveApp = React.createClass({
     return (
       <div id="app">
         <Header/>
+        <DeveloperList/>
         <Footer/>
       </div>
     )
@@ -63,32 +65,11 @@ const Header = React.createClass({
 						<span>{"Project"}</span>
 					</h2>
 
-					<form>
-						<fieldset>
-							<input type="search" placeholder="Search"/>
-						</fieldset>
-					</form>
+					<Search/>
 				</div>
 			</header>
-    )
+    );
   }
 });
 
-  getInitialState: function(){
-    return {
-      filter: ""
-    }
-  },
-
-  render: function(){
-    return (
-      <div id="body">
-        <Search/>
-
-        <DeveloperList/>
-      </div>
-    )
-  }
-});
-
-module.exports = HacktiveApp
+export default HacktiveApp;

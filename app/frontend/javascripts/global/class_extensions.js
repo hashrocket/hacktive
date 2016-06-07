@@ -164,3 +164,12 @@ Number.prototype.abbreviate = function(){
   }
 }
 //-----End: Number-----//
+
+//-----Start: String-----//
+// Method: titlefy
+// Desc: Capitalize each word in a string
+String.prototype.titlefy = function() {
+	return this.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+};
+
+
