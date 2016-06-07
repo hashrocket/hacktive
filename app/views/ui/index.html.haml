@@ -1,0 +1,67 @@
+%header
+	%ul.squares
+		- 120.times do |i|
+			%li
+	.container
+		%h1 Hacktive
+		%h2
+			= image_tag "logo_hr_mark.svg", alt: "Hashrocket"
+			A
+			= link_to "Hashrocket", "http://www.hashrocket.com"
+			Project
+		%form
+			%fieldset
+				%input(type="search" placeholder="Search")
+
+%section
+	- 3.times do
+		%article
+			%header
+				%figure
+					= link_to "http://www.github.com/dkarter" do
+						%img(src="https://avatars3.githubusercontent.com/u/551858?v=3&s=460" alt="Dorian Karter")
+				.name_handle
+					.centered_items
+						%h1
+							= link_to "Dorian Karter", "http://www.github.com/dkarter"
+						= link_to "http://www.github.com/dkarter", class: "github_button" do
+							%i.fa.fa-github
+							dkarter
+			%ul
+				%li.pull
+					%h2
+						Pull request for
+						= link_to "telly/TLYShyNavBar", "http://github.com/telly/TLYShyNavBar"
+						= surround "(", ")" do
+							%span.octicon.octicon-star
+							4
+					%p Expand navBar if scrollView&rsquo;s window is visible
+					%p.timestamp Apr 27, 2016 11:40 AM
+				%li.push
+					%h2
+						Pushed to
+						= link_to "dkarter/blog", "http://github.com/dkarter/blog"
+					%figure
+						.languages
+							%span.ruby{:style => "width: 60%;", "title" => "60% Ruby"}
+							%span.js{:style => "width: 25%;", "title" => "25% Javascript"}
+							%span.html{:style => "width: 15%;", "title" => "15% HTML"}
+						%figcaption.breakdown 60% Ruby, 25% Javascript, 15% HTML
+					%p Post: kill listening processes
+					%p.timestamp Apr 25, 2016 10:25 PM
+
+%footer
+	%ul.squares
+		- 60.times do |i|
+			%li
+	.container
+		= link_to "http://hashrocket.com" do
+			%img(src="images/logo_hashrocket.svg" width="95" height="42" alt="Hashrocket")
+
+:javascript
+	$(function() {
+	  $(".languages").on("click",function(e) {
+	    e.preventDefault();
+	    $(this).siblings("figcaption").toggle(300);
+	  });
+	});

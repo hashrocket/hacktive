@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html do
          redirect_to(
-          action: 'index',
-          controller: 'developers'
+          action: "index",
+          controller: "developers"
         )
       end
     end
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def readme
     respond_to do |format|
-      format.html { render 'README.md' }
+      format.html { render "README.md" }
     end
   end
 end

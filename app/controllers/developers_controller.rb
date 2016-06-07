@@ -8,14 +8,14 @@
 
 class DevelopersController < ApplicationController
   def index
-    @title = 'Hacktive'
+    @title = "Hacktive"
 
     GithubFetchJob.perform_later
 
     developers = Developer.active_developers
 
     respond_to do |format|
-      format.html { render 'index' }
+      format.html { render "index" }
       format.json { render json: developers }
     end
   end

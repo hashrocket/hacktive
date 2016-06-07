@@ -1,0 +1,46 @@
+$red: #ED3E4B
+$gray: #333
+$white: #fff
+
+@font-face
+  font-family: 'League Spartan'
+  src: url('../fonts/leaguespartan-bold-webfont.eot')
+  src: url('../fonts/leaguespartan-bold-webfont.eot?#iefix') format("embedded-opentype"), url('../fonts/leaguespartan-bold-webfont.woff2') format("woff2"), url('../fonts/leaguespartan-bold-webfont.woff') format("woff"), url('../fonts/leaguespartan-bold-webfont.ttf') format("truetype"), url('../fonts/leaguespartan-bold-webfont.svg#league_spartanregular') format("svg")
+  font-weight: normal
+  font-style: normal
+
+@font-face
+  font-family: 'Octicons'
+  src: url('../fonts/octicons.eot?#iefix') format("embedded-opentype"), url('../fonts/octicons.woff') format("woff"), url('../fonts/octicons.ttf') format("truetype"), url('../fonts/octicons.svg#octicons') format("svg")
+  font-weight: normal
+  font-style: normal
+
+= text_clip
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+
+= clearfix
+  &:after
+    content: ""
+    clear: both
+    display: block
+    height: 0
+    overflow: hidden
+    visibility: hidden
+
+= centered
+  margin: 0 auto
+  width: 60%
+  max-width: 1000px
+  +max-width(650)
+    width: 80%
+
+= min-width($width: 900)
+  @media screen and (min-width: #{$width}px)
+    @content
+    transition: all .5s ease-in-out
+= max-width($width: 900)
+  @media screen and (max-width: #{$width}px)
+    @content
+    transition: all .5s ease-in-out
