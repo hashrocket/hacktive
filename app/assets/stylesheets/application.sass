@@ -115,6 +115,27 @@ ul.squares
 						color: $white
 						border: 2px solid $white
 						outline: 0
+#footer
+	position: relative
+	overflow: hidden
+	ul.squares
+		display: block
+		background-color: rgba(51,51,51,1)
+		background: linear-gradient(top, rgba(51,51,51,1) 0%, rgba(51,51,51,0) 100%)
+		li
+			background: darken($gray, 5%)
+			border: 2px solid darken($gray, 10%)
+			transform: rotate(-45deg)
+	.container
+		text-align: center
+		z-index: 5
+		a
+			display: inline-block
+			margin: 0 auto 2em
+			position: relative
+			z-index: 7
+		img
+			width: 6em
 
 section
 	+centered

@@ -23,13 +23,24 @@ const HacktiveApp = React.createClass({
     return (
       <div id="app">
         <Header/>
+        <Footer/>
       </div>
     )
   }
 });
 
+const Footer = React.createClass({
   render: function(){
     return (
+			<footer id="footer">
+				<Squares count={60}/>
+
+				<div className="container">
+					<a href="http://hashrocket.com" target="_blank">
+						<img src={ICONS.logos.hashrocketFull} alt="Hashrocket"/>
+					</a>
+				</div>
+			</footer>
     )
   }
 });
