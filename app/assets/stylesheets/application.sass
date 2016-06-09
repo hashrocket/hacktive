@@ -23,6 +23,8 @@ p
 
 a
 	text-decoration: none
+	&:visited
+		outline: none
 
 .container
 	+centered
@@ -221,14 +223,15 @@ section
 					h2
 						&:before
 							content: "\f01f"
-				p
+				.message,
+				.timestamp
+					color: lighten($gray, 30%)
 					font-size: .85em
 					line-height: 1.7
 					margin: 0 0 .3em
-					&.timestamp
-						color: lighten($gray, 30%)
-						font-weight: 50
-						text-transform: uppercase
+				.timestamp
+					font-weight: 50
+					text-transform: uppercase
 				figure
 					.languages
 						border: 1px solid lighten($gray, 60%)

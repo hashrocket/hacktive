@@ -30,7 +30,14 @@ const DeveloperActivity = React.createClass({
 					</a>
 				</h2>
 
-				<p>{payload.message}</p>
+				<a
+					className="message"
+					href={activity.activity_url}
+					target="_blank"
+				>
+					{payload.message}
+				</a>
+
 				<p className="timestamp">{this.getTimestamp()}</p>
 			</li>
 		);
@@ -52,7 +59,13 @@ const DeveloperActivity = React.createClass({
 					</a>
 				</h2>
 
-				<p>{payload.message}</p>
+				<a
+					className="message"
+					href={activity.activity_url}
+					target="_blank"
+				>
+					{payload.message}
+				</a>
 				<p className="timestamp">{this.getTimestamp()}</p>
 			</li>
 		);
@@ -80,7 +93,13 @@ const DeveloperActivity = React.createClass({
 					</a>
 				</h2>
 
-				<p>{description}</p>
+				<a
+					className="message"
+					href={activity.activity_url}
+					target="_blank"
+				>
+					{description}
+				</a>
 				<p className="timestamp">{this.getTimestamp()}</p>
 			</li>
 		);
