@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import { mount } from "enzyme";
 import $ from "jquery";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -12,7 +13,7 @@ describe("Developer List", function(){
   it("requests developers on mount", sinon.test(function(){
     this.spy($, "ajax")
 
-    const developerList = ReactTestUtils.renderIntoDocument(<DeveloperList/>);
+    const developerList = mount(<DeveloperList/>);
     const ajaxArgs = $.ajax.args[0][0];
 
     expect($.ajax.calledOnce).to.be.true;
@@ -25,11 +26,8 @@ describe("Developer List", function(){
 
     DeveloperStore.setDevelopers(developers)
 
-    const developerList = ReactTestUtils.renderIntoDocument(<DeveloperList/>);
-    const developerCards = ReactTestUtils.scryRenderedComponentsWithType(
-      developerList,
-      DeveloperCard
-    );
+    const developerList = mount(<DeveloperList/>);
+    const developerCards = developerList.find(DeveloperCard);
 
     expect(developerCards.length).to.equal(1)
   });

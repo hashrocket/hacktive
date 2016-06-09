@@ -34,6 +34,7 @@ const DeveloperCard = React.createClass({
 						>
 							<img
 								alt={developer.name}
+								className="avatar"
 								src={`https://avatars.githubusercontent.com/u/${developer.id}`}
 							/>
 						</a>
@@ -62,7 +63,7 @@ const DeveloperCard = React.createClass({
 					</div>
 				</header>
 
-				<ul>
+				<ul className="activities">
 					{this.renderActivities()}
 				</ul>
       </article>

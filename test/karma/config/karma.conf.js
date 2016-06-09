@@ -8,7 +8,12 @@ module.exports = function (config) {
       "factories.webpack.js",
       "tests.webpack.js"
     ],
-    frameworks: [ "mocha", "sinon-chai", "chai-factories", "chai" ],
+    frameworks: [
+      "mocha",
+      "sinon-chai",
+      "chai-factories",
+      "chai"
+    ],
     preprocessors: {
       "factories.webpack.js": [ "webpack", "sourcemap" ],
       "tests.webpack.js": [ "webpack", "sourcemap" ]

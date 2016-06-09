@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import { mount } from "enzyme";
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactTestUtils from "react-addons-test-utils";
@@ -11,11 +12,11 @@ import SearchStore from "flux/stores/search_store";
 
 describe("Developer list search", function(){
   afterEach(function(){
-    SearchStore.setQuery("")
+    SearchStore.setQuery("");
   })
 
   it("filters developers by username", function(){
-    const search = ReactTestUtils.renderIntoDocument(<Search/>);
+    const search = mount(<Search/>);
     const developers = [
       chai.create("developer"),
       chai.create("developer", {
@@ -45,33 +46,26 @@ describe("Developer list search", function(){
       })
     ];
 
-    DeveloperStore.setDevelopers(developers)
+    DeveloperStore.setDevelopers(developers);
 
-    let developerList = ReactTestUtils.renderIntoDocument(<DeveloperList/>);
-    let developerCards = ReactTestUtils.scryRenderedComponentsWithType(
-      developerList, DeveloperCard
-    );
+    let developerList = mount(<DeveloperList/>);
+    let developerCards = developerList.find(DeveloperCard);
 
-    expect(developerCards.length).to.equal(2)
+    expect(developerCards.length).to.equal(2);
 
-    const searchInput = ReactTestUtils.findRenderedDOMComponentWithTag(
-      search, "input"
-    );
+    const searchInput = search.find("input");
 
-    searchInput.value = "vekh"
-    ReactTestUtils.Simulate.change(searchInput)
+    searchInput.node.value = "vekh";
+    searchInput.simulate("change");
 
-    developerList = ReactTestUtils.renderIntoDocument(<DeveloperList/>);
+    developerList.update();
+    developerCards = developerList.find(DeveloperCard);
 
-    developerCards = ReactTestUtils.scryRenderedComponentsWithType(
-      developerList, DeveloperCard
-    );
-
-    expect(developerCards.length).to.equal(1)
+    expect(developerCards.length).to.equal(1);
   });
 
   it("filters developers by full name", function(){
-    const search = ReactTestUtils.renderIntoDocument(<Search/>);
+    const search = mount(<Search/>);
     const developers = [
       chai.create("developer"),
       chai.create("developer", {
@@ -101,27 +95,21 @@ describe("Developer list search", function(){
       })
     ];
 
-    DeveloperStore.setDevelopers(developers)
+    DeveloperStore.setDevelopers(developers);
 
-    let developerList = ReactTestUtils.renderIntoDocument(<DeveloperList/>);
-    let developerCards = ReactTestUtils.scryRenderedComponentsWithType(
-      developerList, DeveloperCard
-    );
+    let developerList = mount(<DeveloperList/>);
+    let developerCards = developerList.find(DeveloperCard);
 
     expect(developerCards.length).to.equal(2)
 
-    const searchInput = ReactTestUtils.findRenderedDOMComponentWithTag(
-      search, "input"
-    );
+    const searchInput = search.find("input");
 
-    searchInput.value = "vidal ekechukwu"
-    ReactTestUtils.Simulate.change(searchInput)
+    searchInput.node.value = "vidal ekechukwu";
+    searchInput.simulate("change");
 
-    developerList = ReactTestUtils.renderIntoDocument(<DeveloperList/>);
-    developerCards = ReactTestUtils.scryRenderedComponentsWithType(
-      developerList, DeveloperCard
-    );
+    developerList.update();
+    developerCards = developerList.find(DeveloperCard);
 
-    expect(developerCards.length).to.equal(1)
+    expect(developerCards.length).to.equal(1);
   });
 });

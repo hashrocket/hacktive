@@ -17,6 +17,7 @@
     "chai": "^3.5.0",
     "chai-factories": "^0.1.0",
     "chunk-manifest-webpack-plugin": "^0.0.1",
+    "enzyme": "^2.3.0",
     "exports-loader": "^0.6.2",
     "expose-loader": "^0.6.0",
     "imports-loader": "^0.6.3",

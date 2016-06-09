@@ -1,5 +1,15 @@
-var webpack = require("webpack");
 var _ = require("lodash");
-var config = module.exports = require("./main.config.js");
+var webpack = require("webpack");
+var config = require("./main.config.js");
 
 config.devtool = "inline-source-map";
+
+config.externals = {
+	"cheerio": "window",
+  "react/addons": true,
+  "react/lib/ExecutionEnvironment": true,
+  "react/lib/ReactContext": true
+};
+
+
+module.exports = config;
