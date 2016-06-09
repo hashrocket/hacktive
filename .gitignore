@@ -13,7 +13,6 @@
 /log/*
 !/log/.keep
 /tmp
-app/assets/javascripts/bundle.js*
 db/structure.sql
 dump.rdb
 node_modules
