@@ -17,6 +17,10 @@ const UiStore = assign({}, EventEmitter.prototype, {
     return true; // No errors. Needed by promise in Dispatcher.
   }),
 
+  inputFocused: function() {
+    return document.activeElement.tagName.match(/input|textarea/i);
+  },
+
   emitChange: function() {
     this.emit(CHANGE_EVENT);
   },
