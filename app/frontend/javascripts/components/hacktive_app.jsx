@@ -22,7 +22,7 @@ const HacktiveApp = React.createClass({
 
   render: function(){
     return (
-      <div id="app">
+      <div className="site">
         <Header/>
         <DeveloperList/>
         <Footer/>
