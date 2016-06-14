@@ -17,11 +17,12 @@ const DeveloperActivity = React.createClass({
 	renderIssuesEvent: function(){
 		const activity = this.props.activity;
     const payload = activity.payload;
+		const action = payload.action;
 
 		return (
-			<li className="issue">
+			<li className={`issue ${action}`}>
 				<h2>
-					<span>{`${payload.action.titlefy()} issue on `}</span>
+					<span>{`${action.titlefy()} issue on `}</span>
 					<a
 						href={`https://github.com/${activity.repo_name}`}
 						target="_blank"
@@ -46,11 +47,12 @@ const DeveloperActivity = React.createClass({
 	renderPullEvent: function(){
 		const activity = this.props.activity;
 		const payload = activity.payload;
+		const action = payload.action;
 
 		return (
-			<li className="pull">
+			<li className={`pull ${action}`}>
 				<h2>
-					<span>{`${payload.action.titlefy()} pull request on `}</span>
+					<span>{`${action.titlefy()} pull request on `}</span>
 					<a
 						href={`https://github.com/${activity.repo_name}`}
 						target="_blank"

@@ -221,10 +221,40 @@ section
 						position: absolute
 						top: -3px
 						left: -25px
+				&.issue
+					h2
+						&:before
+							content: "\f026"
+					&.closed
+						h2
+							&:before
+								content: "\f028"
+								color: red
+					&.opened
+						h2
+							&:before
+								color: green
+					&.reopened
+						h2
+							&:before
+								content: "\f027"
+								color: purple
 				&.pull
 					h2
 						&:before
 							content: "\f009"
+					&.closed
+						h2
+							&:before
+								color: red
+					&.opened
+						h2
+							&:before
+								color: green
+					&.reopened
+						h2
+							&:before
+								color: purple
 				&.push
 					h2
 						&:before
