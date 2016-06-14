@@ -7,20 +7,20 @@ RSpec.describe Developer do
         {
           "id"=>2782858,
           "name"=>"jwworth",
-          "first_activity_timestamp"=>Time.parse("2016-02-19 21:04:43 UTC")
+          "recently_active_at"=>Time.parse("2016-02-19 21:04:43 UTC")
         },
         {
           "id"=>6863100,
           "name"=>"chadbrading",
-          "first_activity_timestamp"=>Time.parse("2016-02-18 21:08:24 UTC")
+          "recently_active_at"=>Time.parse("2016-02-18 21:08:24 UTC")
         }
       ]
 
       first_developer = developers.first.as_json
       second_developer = developers.second.as_json
 
-      expect(first_developer['first_activity_timestamp']).to(
-        be > second_developer['first_activity_timestamp']
+      expect(first_developer['recently_active_at']).to(
+        be > second_developer['recently_active_at']
       )
     end
   end

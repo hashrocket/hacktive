@@ -12,29 +12,30 @@ class Developer < ActiveRecord::Base
   def self.active_developers
     Developer.find_by_sql(
       <<-SQL
-        select d.*, da.activities_json as activities,
-        da.first_activity_timestamp
-        from developers d
-
-        -- Developer Activity
-        join (
-          select da1.developer_id,
-          to_json(array_agg(da1)) activities_json,
-          max(da1.event_occurred_at) as first_activity_timestamp
-
-          from (
-            select * from developer_activities
-            where event_occurred_at between
+        with recently_active_developer_ids as (
+          select distinct developer_id from developer_activities
+          where event_occurred_at > (
             now() - interval '#{ENV['ACTIVITY_CUTOFF_DURATION']} seconds'
-            and now()
+          )
+        )
 
-            order by event_occurred_at desc
-          ) da1
+        select d.*, to_json(array_agg(
+          da order by da.event_occurred_at desc
+        )) activities,
+        max(da.event_occurred_at) recently_active_at
 
-          group by da1.developer_id
+        from developers d
+        join recently_active_developer_ids rad on d.id=rad.developer_id
+
+        join lateral (
+          select * from developer_activities
+          where developer_id=d.id
+          order by event_occurred_at desc
+          limit 3
         ) da on da.developer_id=d.id
 
-        order by da.first_activity_timestamp desc
+        group by d.id
+        order by max(da.event_occurred_at) desc
       SQL
     )
   end

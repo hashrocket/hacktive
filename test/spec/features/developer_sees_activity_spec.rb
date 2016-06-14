@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.feature "Hacker list" do
   include ActiveJob::TestHelper
 
-  let(:developer) { create(:developer) }
-
   scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
     vekh_events = [
@@ -107,7 +105,7 @@ RSpec.feature "Hacker list" do
   end
 
   scenario "Developer card shows pertinent details", type: :request do
-    github_developer = developer.as_json
+    github_developer = create(:developer).as_json
 
     # https://api.github.com/users/vekh/events
     github_developer_events = [
@@ -160,7 +158,7 @@ RSpec.feature "Hacker list" do
   end
 
   scenario "Developer sees commit to github project", type: :request do
-    github_developer = developer.as_json
+    github_developer = create(:developer).as_json
 
     # https://api.github.com/users/vekh/events
     github_developer_events = [
@@ -320,10 +318,10 @@ RSpec.feature "Hacker list" do
 
   scenario 'Developer sees time description for a recent commit', type: :request do
     # https://api.github.com/users/vekh
-    github_developer = developer.as_json
+    github_developer = create(:developer).as_json
 
     # https://api.github.com/users/vekh/events
-    event_occured_at = Time.now.to_s
+    event_occurred_at = Time.now.to_s
     github_developer_events = [
       {
         "id" => "3650080452",
@@ -355,7 +353,7 @@ RSpec.feature "Hacker list" do
           ]
         },
         "public" => true,
-        "created_at" => event_occured_at
+        "created_at" => event_occurred_at
       }
     ]
 
@@ -369,61 +367,52 @@ RSpec.feature "Hacker list" do
     expect(top_developer["login"]).to eq 'VEkh'
     expect(
       Time.parse(most_recent_activity['event_occurred_at'])
-    ).to eq Time.parse(event_occured_at)
+    ).to eq Time.parse(event_occurred_at)
   end
 
   scenario 'Developer card not shown if activity occurred before cutoff date', type: :request do
-    # https://api.github.com/users/vekh
-    github_developer = developer.as_json
-
-    # https://api.github.com/users/vekh/events
     pre_cutoff_date = (
       Time.now -
       ENV['ACTIVITY_CUTOFF_DURATION'].to_i.seconds -
       1.hour
     )
 
-    github_developer_events = [
-      {
-        "id" => "3633736925",
-        "type" => "PushEvent",
-        "actor" => {
-          "id" => 735821,
-          "login" => "VEkh",
-          "gravatar_id" => "",
-          "url" => "https://api.github.com/users/VEkh",
-          "avatar_url" => "https://avatars.githubusercontent.com/u/735821?"
-        },
-        "repo" => {
-          "id" => 51382870,
-          "name" => "VEkh/sideprojects",
-          "url" => "https://api.github.com/repos/VEkh/sideprojects"
-        },
-        "payload" => {
-          "commits" => [
-            {
-              "sha" => "6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62",
-              "author" => {
-                "email" => "vekechukwu@gmail.com",
-                "name" => "Vidal Ekechukwu"
-              },
-              "message" => "Javascripts are loaded. React flow is set up.",
-              "distinct" => true,
-              "url" => "https://api.github.com/repos/VEkh/sideprojects/commits/6ae4312e0b28cd32d3b49e11ecae68bbe9b58d62"
-            }
-          ]
-        },
-        "public" => true,
-        "created_at" => pre_cutoff_date
-      }
-    ]
-
-    Developer.create_with_json(github_developer)
-    DeveloperActivity.create_with_json(github_developer_events)
+    activity = create(
+      :developer_activity,
+      event_occurred_at: pre_cutoff_date
+    )
 
     get '/developers.json'
     developers = JSON.parse(response.body)
 
     expect(developers).to be_empty
+  end
+
+  scenario 'Developer card shows up to 3 activities if one occurred after cutoff date', type: :request do
+    developer = create(:developer)
+    new_activity = create(
+      :developer_activity,
+      developer: developer
+    )
+
+    developer.developer_activities << new_activity
+
+    pre_cutoff_date = (
+      Time.now -
+      ENV["ACTIVITY_CUTOFF_DURATION"].to_i.seconds -
+      1.hour
+    )
+
+    old_activity = create(
+      :developer_activity,
+      developer: developer,
+      event_occurred_at: pre_cutoff_date
+    )
+
+    get '/developers.json'
+    response_developers = JSON.parse(response.body)
+    response_developer = response_developers.first
+
+    expect(response_developer["activities"].count).to eq 2
   end
 end
