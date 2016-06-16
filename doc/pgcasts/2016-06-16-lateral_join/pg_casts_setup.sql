@@ -19,7 +19,7 @@ insert into event_types (name)
   values ('push'), ('pull'), ('fork');
 
 -- Create developer activities table
-create table developer_activities (
+create table activities (
   id serial primary key,
   developer_id integer not null references developers(id),
   event_type text not null references event_types(name)
@@ -38,11 +38,11 @@ with recursive random_activities (row_num, developer_id, event_type) as (
     from random_activities
     cross join developers d
     cross join event_types et
-    where row_num <20
+    where row_num < 50
     order by random() limit 1
   )
 )
 
-insert into developer_activities (developer_id, event_type)
+insert into activities (developer_id, event_type)
   select random_activities.developer_id,
   random_activities.event_type from random_activities;
