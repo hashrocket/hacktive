@@ -1,11 +1,11 @@
 -- Create developers table
 create table developers (
   id integer primary key,
-  login text not null
+  username text not null
 );
 
 -- Generate developers
-insert into developers (id, login)
+insert into developers (id, username)
   select dev_id, 'dev' || dev_id
   from generate_series(1, 10) as dev_id;
 
