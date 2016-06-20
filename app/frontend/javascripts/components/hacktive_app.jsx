@@ -54,7 +54,7 @@ const Header = React.createClass({
 				<Squares count={100}/>
 
 				<div className="container">
-					<h1>{"Hacktive"}</h1>
+					<h1/>
 					<h2>
 						<img src={ICONS.logos.hashrocketIcon} alt="Hashrocket"/>
 

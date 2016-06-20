@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
   def index
     @title = "Hacktive"
 
+    GithubFetchJob.perform_later
+
+    developers = Developer.active_developers
+
     respond_to do |format|
-      format.html do
-         redirect_to(
-          action: "index",
-          controller: "developers"
-        )
-      end
+      format.html { render "index" }
+      format.json { render json: developers }
     end
   end
 

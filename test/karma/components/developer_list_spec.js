@@ -18,7 +18,7 @@ describe("Developer List", function(){
 
     expect($.ajax.calledOnce).to.be.true;
     expect(ajaxArgs.type).to.equal("GET");
-    expect(ajaxArgs.url).to.equal("/developers");
+    expect(ajaxArgs.url).to.equal("/");
   }));
 
   it("shows fetched developers", function(){
