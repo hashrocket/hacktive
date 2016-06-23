@@ -28,7 +28,7 @@ const DeveloperList = React.createClass({
         DevelopersActions.setDevelopers(response)
       },
       type: "GET",
-      url: "/"
+      url: "/developers"
     })
   },
 

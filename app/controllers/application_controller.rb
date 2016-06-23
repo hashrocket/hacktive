@@ -6,19 +6,14 @@ class ApplicationController < ActionController::Base
   def index
     @title = "Hacktive"
 
-    GithubFetchJob.perform_later
-
-    developers = Developer.active_developers
-
     respond_to do |format|
-      format.html { render "index" }
-      format.json { render json: developers }
+      format.any { render "index" }
     end
   end
 
   def readme
     respond_to do |format|
-      format.html { render "README.md" }
+      format.any { render "README.md" }
     end
   end
 end
