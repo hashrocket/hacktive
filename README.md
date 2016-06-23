@@ -32,7 +32,8 @@ Then:
 ## Hosting
 Hacktive can be found publicly at the following locations:
 
-* [Staging](http://hashrocket-hacktive-staging.herokuapp.com/)
+* [Staging](http://hacktive-staging.herokuapp.com/)
+* [Production](http:/hacktive.hashrocket.com/)
 
 ## License
 Hacktive is released under the [MIT License](https://opensource.org/licenses/MIT)
