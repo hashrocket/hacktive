@@ -24,7 +24,7 @@ const DeveloperActivity = React.createClass({
 				<h2>
 					<span>{`${action.titlefy()} issue on `}</span>
 					<a
-						href={`https://github.com/${activity.repo_name}`}
+						href={activity.activity_url}
 						target="_blank"
 					>
 						{activity.repo_name}
@@ -54,7 +54,7 @@ const DeveloperActivity = React.createClass({
 				<h2>
 					<span>{`${action.titlefy()} pull request on `}</span>
 					<a
-						href={`https://github.com/${activity.repo_name}`}
+						href={activity.activity_url}
 						target="_blank"
 					>
 						{activity.repo_name}
@@ -88,7 +88,7 @@ const DeveloperActivity = React.createClass({
 				<h2>
 					<span>{"Pushed to "}</span>
 					<a
-						href={`https://github.com/${activity.repo_name}`}
+						href={activity.activity_url}
 						target="_blank"
 					>
 						{activity.repo_name}
