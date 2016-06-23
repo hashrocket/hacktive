@@ -37,6 +37,8 @@ class DeveloperActivity < ActiveRecord::Base
         when "PushEvent"
           commits = payload["commits"]
 
+					next if commits.empty?
+
           payload_json = {}
           payload_json["commits"] = commits.map do |commit|
             commit.slice("message", "sha")

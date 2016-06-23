@@ -8,7 +8,9 @@ module Upsertable
     end
 
     def upsert!(locator, attributes)
-      upsert(locator, attributes) || raise(RecordNotSaved.new("Failed to save the record", self))
+      if !upsert(locator, attributes)
+				raise(RecordNotSaved.new("Failed to save the record", self))
+			end
     end
   end
 end
