@@ -54,7 +54,16 @@ const Header = React.createClass({
 				<Squares count={100}/>
 
 				<div className="container">
-					<h1/>
+					<a
+						className="logo"
+						href="/"
+					>
+						<img
+							alt="Hashrocket"
+							src={ICONS.logos.hacktive}
+						/>
+					</a>
+
 					<h2>
 						<img src={ICONS.logos.hashrocketIcon} alt="Hashrocket"/>
 

@@ -7,6 +7,7 @@ const ICONS = {
     black: `${iconDirectory}/filter_black.png`
   },
 	logos: {
+		hacktive: `${logoDirectory}/logo_hacktive.svg`,
 		hashrocketFull: `${logoDirectory}/logo_hashrocket.svg`,
 		hashrocketIcon: `${logoDirectory}/logo_hr_mark.svg`
 	},

@@ -1,0 +1,7 @@
+$phone_landscape_width: 45em;
+
+@mixin phone_landscape_plus {
+	@media screen and (min-width: $phone_landscape_width) {
+		@content;
+	}
+}

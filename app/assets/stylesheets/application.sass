@@ -4,6 +4,7 @@
 @import "font-awesome"
 @import "colors"
 @import "keyframes"
+@import "media_queries"
 @import "mixins"
 
 body
@@ -22,6 +23,7 @@ p
 	font-weight: 100
 
 a
+	display: block
 	text-decoration: none
 	&:visited
 		outline: none
@@ -61,21 +63,20 @@ ul.squares
 		padding: 4em 0
 		position: relative
 		z-index: 5
-		h1
-			text-indent: 100%
-			white-space: nowrap
-			overflow: hidden
+		.logo
 			display: block
-			background: url(/assets/logos/logo_hacktive.svg) center center no-repeat
-			width: 42vw
-			height: 17vw
-			margin: 0 auto .5em
+			margin: 0 auto 2em
+			position: relative
+			width: 85%
 			z-index: 5
+			img
+				min-height: 17vw
+				width: 100%
 		h2
 			align-items: center
 			color: lighten($red, 30%)
 			display: flex
-			font-size: 1em
+			font-size: 0.6em
 			justify-content: center
 			letter-spacing: 4px
 			text-transform: uppercase
@@ -83,13 +84,13 @@ ul.squares
 			> *
 				margin: 0 0.25em
 			img
-				height: 1em
-				width: 1em
+				height: 1.75em
+				width: 1.75em
 			a
-				color: lighten($red, 30%)
+				color: lighten($red, 40%)
 				transform: color 300ms
 				&:hover
-					color: lighten($red, 40%)
+					color: lighten($red, 50%)
 		form
 			z-index: 5
 			fieldset
@@ -104,18 +105,19 @@ ul.squares
 				:-ms-input-placeholder
 					color: lighten($red, 25%)
 				input[type="search"]
+					background: $red image-url("img_search.svg") 10px 9px no-repeat
+					background-size: 16px 16px
+					border: 2px solid lighten($red, 10%)
+					box-sizing: border-box
 					color: lighten($red, 25%)
 					font-family: "League Spartan", sans-serif
 					font-size: 12px
 					letter-spacing: 2px
-					text-transform: uppercase
-					background: $red image-url("img_search.svg") 10px 9px no-repeat
-					background-size: 16px 16px
-					border: 2px solid lighten($red, 10%)
+					max-width: 30em
 					padding: 10px 10px 10px 40px
+					text-transform: uppercase
 					transition: border 300ms
-					box-sizing: border-box
-					width: 45%
+					width: 100%
 					&:hover, &:focus
 						color: $white
 						border: 2px solid $white
@@ -210,6 +212,7 @@ section
 					margin: 0 0 .3em
 					a
 						color: $red
+						display: inline-block
 						transition: color 300ms
 						&:hover
 							color: saturate($red, 20%)
@@ -291,3 +294,8 @@ section
 						font-size: .8em
 						display: none
 						margin: .3em 0 .5em
++phone_landscape_plus
+	#header
+		.container
+			h2
+				font-size: 1em
