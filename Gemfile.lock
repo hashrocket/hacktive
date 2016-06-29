@@ -143,6 +143,9 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     octokit (4.3.0)
       sawyer (~> 0.7.0, >= 0.5.3)
+    passenger (5.0.28)
+      rack
+      rake (>= 0.8.1)
     pg (0.18.4)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -300,6 +303,7 @@ DEPENDENCIES
   launchy
   markdown-rails
   octokit
+  passenger
   pg
   pry-byebug
   pry-rails
