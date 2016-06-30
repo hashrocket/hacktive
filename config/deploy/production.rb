@@ -1,4 +1,4 @@
-set :host, "54.163.158.72"
+set :host, "52.23.113.14"
 set :stage, :production
 
 server fetch(:host), roles: %w{app db web}, user: fetch(:user)
