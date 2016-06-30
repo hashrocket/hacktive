@@ -1,0 +1,19 @@
+#!/bin/sh
+
+FILENAME=`basename $0` # Current file's name
+
+case $1 in
+	"start")
+		sudo /opt/nginx/sbin/nginx
+	;;
+
+	"stop")
+		sudo /opt/nginx/sbin/nginx -s stop
+	;;
+
+	*)
+		echo "Usage: $FILENAME {start|stop}"
+	;;
+esac
+
+exit 0

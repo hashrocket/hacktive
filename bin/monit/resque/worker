@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# .bashrc configs:
+# * HACKTIVE_DIR
+# * RAILS_ENV
+
+APP_DIR=$HACKTIVE_DIR
+QUEUE_NAME=$2
+
+case $1 in
+	"start")
+		cd $APP_DIR
+
+		BACKGROUND=1\
+		QUEUE=$QUEUE_NAME\
+		RAILS_ENV=$RAILS_ENV\
+		VERBOSE=1\
+		bundle exec rake resque:work --trace
+	;;
+
+	"stop")
+		pids=`ps aux | grep [r]esque-.*$QUEUE_NAME | awk '{print $2}'`
+		kill -9 $pids 2> /dev/null
+
+		echo "stopping $QUEUE_NAME"
+	;;
+
+	*)
+		echo "Usage: worker {start|stop} {worker_name}"
+	;;
+esac
+
+exit 0

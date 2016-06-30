@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# .bashrc configs:
+# * HACKTIVE_DIR
+# * RAILS_ENV
+
+APP_DIR=$HACKTIVE_DIR
+FILENAME=`basename $0`
+LOGFILE="$APP_DIR/log/${RAILS_ENV}.log"
+QUEUE_NAME="resque-scheduler"
+
+case $1 in
+	"start")
+		cd $APP_DIR
+
+		BACKGROUND=1\
+		LOGFILE=$LOGFILE\
+		RAILS_ENV=$RAILS_ENV\
+		VERBOSE=1\
+		bundle exec rake resque:scheduler --trace
+	;;
+
+	"stop")
+		process_grep=`sed -r -e "s/^(.)/[\1]/" <<< $QUEUE_NAME`
+		pids=`ps aux | grep $process_grep | awk '{print $2}'`
+		kill -9 $pids 2> /dev/null
+
+		echo "stopping $QUEUE_NAME"
+	;;
+
+	*)
+		echo "Usage: $FILENAME {start|stop}"
+	;;
+esac
+
+exit 0
