@@ -6,5 +6,6 @@ Rails.application.configure do
   config.cache_classes = false
   config.consider_all_requests_local = true
   config.eager_load = false
+  config.force_ssl = true
   config.react.variant = :development
 end

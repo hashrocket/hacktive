@@ -34,6 +34,7 @@ group :development do
 	gem "capistrano-rvm"
   gem "foreman"
   gem "markdown-rails"
+  gem "thin"
   gem "web-console"
 end
 
