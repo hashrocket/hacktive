@@ -16,4 +16,5 @@
 config/secrets
 db/structure.sql
 dump.rdb
+monitrc*
 node_modules
