@@ -7,9 +7,21 @@ import DeveloperList from "components/developer_list";
 import Search from "components/search";
 import Squares from "components/squares";
 
+function startServiceWorker(){
+  if("serviceWorker" in navigator){
+    navigator.serviceWorker.register("service_worker.js")
+      .then(function(registration){
+        console.log("service worker registered")
+      }).catch(function(error){
+        console.log("service worker registration failed. error: ", error)
+      })
+  }
+}
+
 const HacktiveApp = React.createClass({
   componentDidMount: function(){
     UiStore.addChangeListener(this.onUiStoreChange)
+    startServiceWorker()
   },
 
   componentWillUnmount: function(){
