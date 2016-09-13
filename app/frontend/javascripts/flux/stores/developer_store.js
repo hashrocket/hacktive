@@ -20,7 +20,7 @@ const DeveloperStore = assign({}, EventEmitter.prototype, {
       }
     }
 
-    return true; // No errors. Needed by promise in Dispatcher.
+    return true;
   }),
 
   getDevelopers: function() {
