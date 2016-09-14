@@ -12,10 +12,26 @@ const HacktiveApp = React.createClass({
   componentDidMount: function(){
     ServiceWorkerController.start();
     UiStore.addChangeListener(this.onUiStoreChange);
+
+    window.addEventListener("beforeinstallprompt", this.handleInstallPrompt)
   },
 
   componentWillUnmount: function(){
     UiStore.removeChangeListener(this.onUiStoreChange)
+
+    window.removeEventListener("beforeinstallprompt", this.handleInstallPrompt)
+  },
+
+  handleInstallPrompt: function(domEvent){
+    if(localStorage.installPrompt){
+      domEvent.preventDefault();
+
+      return false;
+    }
+
+    domEvent.userChoice.then(function(choice){
+      localStorage.installPrompt = choice.outcome;
+    });
   },
 
   onUiStoreChange: function(){
