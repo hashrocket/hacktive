@@ -10,8 +10,7 @@
 # Ignore all logfiles and tempfiles.
 .env*
 *.sw*
-/log/*
-!/log/.keep
+/log
 /tmp
 config/secrets
 db/structure.sql
