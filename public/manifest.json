@@ -1,13 +1,17 @@
 {
+  "background_color": "#ed3e4b",
+  "description": "View recent Github activity of your friends.",
   "display": "standalone",
+  "gcm_sender_id": "705632955576",
   "icons": [
     {
-      "sizes": "144x144",
-      "src": "shortcut.png",
+      "sizes": "300x300",
+      "src": "/assets/logos/hammer.png",
       "type": "image/png"
     }
   ],
   "name": "Hacktive",
   "short_name": "Hacktive",
-  "start_url": "/"
+  "start_url": "/",
+  "theme_color": "#ed3e4b"
 }
