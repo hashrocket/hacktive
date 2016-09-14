@@ -3,8 +3,6 @@ class DevelopersController < ApplicationController
     GithubFetchJob.perform_later
     developers = Developer.active_developers
 
-    respond_to do |format|
-      format.json { render json: developers }
-    end
+    render json: developers
   end
 end

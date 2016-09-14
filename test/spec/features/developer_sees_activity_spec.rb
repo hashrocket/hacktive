@@ -3,6 +3,17 @@ require 'rails_helper'
 RSpec.feature "Hacker list" do
   include ActiveJob::TestHelper
 
+  def get_developers
+    get(
+      "/developers",
+      nil,
+      {
+        "ACCEPT"=>"application/json",
+        "HTTPS"=>"on"
+      }
+    )
+  end
+
   scenario "Developer with most recent github activity is at top of list", type: :request do
     # https://api.github.com/users/vekh/events
     vekh_events = [
@@ -98,7 +109,7 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(chriserin)
     DeveloperActivity.create_with_json(chriserin_events)
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     developers = JSON.parse(response.body)
 
     expect(developers.first["login"]).to eq 'VEkh'
@@ -147,7 +158,7 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer["activities"].first
 
@@ -205,7 +216,7 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -252,7 +263,7 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -307,7 +318,7 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -360,7 +371,7 @@ RSpec.feature "Hacker list" do
     Developer.create_with_json(github_developer)
     DeveloperActivity.create_with_json(github_developer_events)
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     top_developer = JSON.parse(response.body).first
     most_recent_activity = top_developer['activities'].first
 
@@ -382,7 +393,7 @@ RSpec.feature "Hacker list" do
       event_occurred_at: pre_cutoff_date
     )
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     developers = JSON.parse(response.body)
 
     expect(developers).to be_empty
@@ -409,7 +420,7 @@ RSpec.feature "Hacker list" do
       event_occurred_at: pre_cutoff_date
     )
 
-    get "/developers", nil, {"ACCEPT"=>"application/json"}
+    get_developers
     response_developers = JSON.parse(response.body)
     response_developer = response_developers.first
 
