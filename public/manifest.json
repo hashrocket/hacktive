@@ -1,9 +1,11 @@
 {
   "display": "standalone",
   "icons": [
-    "sizes": "144x144",
-    "src": "shortcut.png",
-    "type": "image/png"
+    {
+      "sizes": "144x144",
+      "src": "shortcut.png",
+      "type": "image/png"
+    }
   ],
   "name": "Hacktive",
   "short_name": "Hacktive",
