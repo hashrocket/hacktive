@@ -10,7 +10,8 @@ import Squares from "components/squares";
 
 const HacktiveApp = React.createClass({
   componentDidMount: function(){
-    ServiceWorkerController.start();
+    const controller = new ServiceWorkerController();
+    controller.start();
     UiStore.addChangeListener(this.onUiStoreChange);
 
     window.addEventListener("beforeinstallprompt", this.handleInstallPrompt)

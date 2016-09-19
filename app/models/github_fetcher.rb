@@ -73,9 +73,9 @@ end
 #
 # Name            SQL Type             Null    Default Primary
 # --------------- -------------------- ------- ------- -------
-# id              integer              false           true   
-# last_fetched_at timestamp with time zone true            false  
-# requests        integer              false   0       false  
-# organization    text                 false           false  
+# id              integer              false           true
+# last_fetched_at timestamp with time zone true            false
+# requests        integer              false   0       false
+# organization    text                 false           false
 #
 #------------------------------------------------------------------------------
